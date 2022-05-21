@@ -1,0 +1,503 @@
+---
+title: "Detailed Report"
+output:
+  html_document:
+    theme: cosmo
+    highlight: pygments
+    toc: true
+    toc_float: true
+    collapsed: false
+    number_sections: false
+    toc_depth: 4
+    #code_folding: hide
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(message=FALSE,warning=FALSE, cache=TRUE)
+```
+
+
+#### Load files and packages:
+```{r Load file and packages}
+library(dplyr)
+library(ggplot2)
+library(tidyverse)
+library(geosphere)
+
+data_all <- list.files(path = "/Users/jonaslenz/Case Study Cyclistic/Data Sets Used", pattern = "May2021_to_April2022_Cyclist_Data.csv", full.names = TRUE) %>% 
+  lapply(read_csv) %>%                        
+  bind_rows
+data_all_before_mapulation <- data_all
+```
+## 1. Data Cleaning with R
+
+
+```{r order data_all}
+data_all <- data_all[order(data_all$started_at),]
+glimpse(data_all)
+```
++ Deleting NA entries:
+
+```{r create data_all}
+data_all <- drop_na(data_all)
+glimpse(data_all)
+```
+
+Dropped
+Rows: **1,082,137** = 5,723,532 - 4,641,395
+
+```{r count the number of casual members}
+count(data_all, vars = member_casual)
+count(data_all_before_mapulation, vars = member_casual)
+```
+Compared casuals are nearly riding as much as Members in Total. The NA in the data seem random judging from the relative equality in reduction of members and casuals from the Data Frame. Therefore this can be assumed as Random noise and excluded.
+
+## 2. Analysis with R
+
+### 2.1 Bike Types
+
+```{r count the number of casual members for each type of bike}
+count(filter(data_all, rideable_type=="classic_bike" ), vars = member_casual)
+count(filter(data_all, rideable_type=="electric_bike" ), vars = member_casual)
+count(filter(data_all, rideable_type=="docked_bike" ), vars = member_casual)
+```
+
++ 38% of the classic_bikes are used by casual members 
++ 44.55% of the electric_bikes are used by casual members
++ The docked_bikes are only used by casual members 
+
+
+### 2.2 Users per Location ID 
+##### 2.2.1 Highest Count of riders per type:
+
+We use this in order to get a glimpse of what stations might be most important for the Analysis.
+```{r List the station_ids where the number of any type of rider is the biggest}
+count_station_id_member <- count(group_by(data_all,start_station_id), vars=member_casual)
+count_station_id_member <- count_station_id_member[order(count_station_id_member$n, decreasing = TRUE), ]
+head(count_station_id_member)
+```
+
+##### 2.2.2 Highest Count of riders in Total:
+
+```{r Highest frequencies of used stations}
+count_start_station_id <- count(group_by(data_all,start_station_id), vars=start_station_id)
+count_start_station_id <- count_start_station_id[order(count_start_station_id$n, decreasing = TRUE), ]
+head(count_start_station_id)
+```
+
+#### 2.2.3 Exlude low Casual Stations
+
+**Next steps:**
+
++ Merge the 2 Tables and get the total number in order to evaluate the % of casual members per starting station. We do this because we want to know which stations are most successful for acquiring members so we can dive deeper into what reasons are behind that.
+
++ By knowing which stations have the highest rate of casual riders we get to know where our approach to acquire members is most successful of course in relation to the number of total members. That is why all stations below the 75 percentile casual riders are dropped in order to focus on the most important ones.
+
+```{r Quantile and Mean of Casual_riders}
+total_station_casual <- merge(count_start_station_id, count_station_id_member, by.x = 1, by.y = 1, all.x = TRUE)
+total_station_casual <- total_station_casual[-c(2)] %>%
+  rename(riders_total = n.x,
+         member_casual = vars.y,
+         total_casual_member = n.y)%>%
+  mutate(perc_member_casual=(total_casual_member/riders_total*100))%>%
+  arrange(. , -perc_member_casual)%>%
+  subset(.,member_casual == "casual")
+  mean(total_station_casual$total_casual_member)
+  quantile(total_station_casual$total_casual_member)
+```
+```{r Highest Frequency of Casual_riders ordered by highest percentage}  
+total_station_casual <-subset(total_station_casual, total_casual_member >= 3150.75)
+head(total_station_casual)%>%
+  select(., start_station_id, riders_total, total_casual_member, perc_member_casual)
+
+```
+
++ The dataset now contains **212 Stations**, which are most important for Cyclistic to Act on, in Descending order by the highest proportion of casual riders.
+
+**Check if we didnt exclude too much Data:**
+
+**The Dataframe contains:** 
+```{r Sum all casual members after cleaning out 75% of stations}
+sum(total_station_casual$total_casual_member)
+```
+**1,645,291** out of **2,044,339** casuals from **212** biggest stations of casual riders.
+
+#### **2.2.4 Exlude low Membbers Stations**
+
++ To get to know Differences between Members and Casuals we reverse the Task and do the Same from above to Members
+So to Expand on the above we reverse the task and get the Following result:
+
+```{r Reversed to find Quantile/Mean Members }
+total_station_member <- merge(count_start_station_id, count_station_id_member, by.x = 1, by.y = 1, all.x = TRUE)
+total_station_member <- total_station_member[-c(2)] %>%
+  rename(riders_total = n.x,
+         member_casual = vars.y,
+         total_casual_member = n.y)%>%
+  mutate(perc_member_casual=(total_casual_member/riders_total*100))%>%
+  arrange(. , -perc_member_casual)%>%
+  subset(.,member_casual == "member")
+mean(total_station_member$total_casual_member)
+quantile(total_station_member$total_casual_member)
+
+```
+```{r Highest frequency of members ordered by highest percentage}  
+total_station_member <-subset(total_station_member, total_casual_member >= 5211)
+head(total_station_member)%>%
+  select(., start_station_id, riders_total, total_casual_member, perc_member_casual)
+```
+
+
+The **next Step** is to evaluate what role riding time plays in the context of casual_riders and how it differs from members.
+
+### **2.3 Time**
+
+#### **2.3.1 Mean Riding-Time per rider**
+
+```{r Mean Time Casual}
+time_data_all <- data_all%>%
+  mutate(riding_time = round(as.vector(ended_at - started_at)/60)) %>%
+  arrange( . ,-riding_time)
+
+#Select View
+head(arrange(time_data_all, riding_time)) %>%
+  select(., start_station_id, member_casual, riding_time)
+
+#Select View
+head(time_data_all) %>%
+  select(., start_station_id, member_casual, riding_time)
+
+mean(time_data_all$riding_time)
+ggplot(time_data_all, aes(x = riding_time)) +
+  geom_boxplot(notch=TRUE)
+
+```
+
++ On average riders using the Cyclist product are cycling **ca. 21 minutes**.
+
++ The Highest and Lowest Values seem to be non significant **outliers** and we cut them as they do not represent our data. The Min Values especially below zero do not make any sense, but also 1 second riding_time  for example is not anything we can expand upon.
+
++ There are a lot of outliers as confirmed by the Boxplot above.
+
+#### **2.3.2 Cut 1% of the bottom and Top**
+
+```{r get Quantiles to cut data}
+quantile(time_data_all$riding_time, c(.99))
+quantile(time_data_all$riding_time, c(.01))
+mean(time_data_all$riding_time)
+```
+```{r remove of Data}
+time_all <- subset(time_data_all, riding_time >= 1 & riding_time <= 129)
+head(time_all)
+mean(time_all$riding_time)
+ggplot(time_all, aes(x = riding_time)) +
+  geom_boxplot() +
+  ggtitle("Boxplot Riding_time")
+```
+
+```{r, dpi=36, out.width="600px", out.height="600px"}
+ggplot(time_all, aes(x = riding_time)) +
+  geom_histogram() +
+  ggtitle("Histogramm riding_time")
+
+```
+
++ By removing outliers the Average dropped by **ca. 4 Minutes**.
++ Above **40 Minutes** there are still many outliers.
+
++ Histogramm: the most data points are distributed on the left side, but the mean is increased by many smaller data points at the right side.
+
+
+#### **2.3.3 Mean time Casual riders**
+
++ Now we aggregate the data by only displaying casuals first and then members.
+
+```{r Casual Time box}
+
+time_all_casuals <- subset(time_all, member_casual == "casual")
+
+
+mean(time_all_casuals$riding_time)
+ggplot(time_all_casuals, aes(x = riding_time)) +
+  geom_boxplot() +
+  ggtitle("Boxplot Riding_time per Casual")
+```
+
+```{r Casual Time Hist}
+ggplot(time_all_casuals, aes(x = riding_time)) +
+  geom_histogram(binwidth = 1) +
+  ggtitle("Histogramm Riding_time per Casual")
+```
+
++ Casual riders have a really high riding_time. But the most important part is the riding time **1 to 50** minutes contains most of the casual riders.
++ the mean riding time of casual riders is **ca. 23 Minutes**
+
+```{r Member Time Box}
+
+time_all_member <- subset(time_all, member_casual == "member")
+
+time_all_member
+mean(time_all_member$riding_time)
+ggplot(time_all_member, aes(x = riding_time)) +
+  geom_boxplot() +
+  ggtitle("Boxplot Riding_time per member")
+```
+
+```{r Member Time Hist}
+ggplot(time_all_member, aes(x = riding_time)) +
+  geom_histogram(binwidth = 1) +
+  ggtitle("Histogramm Riding_time per member")
+
+```
+
++ the mean riding time of members is **ca. 13 Minutes**
++ The mean riding_time is higher for Casuals than members by more than **10 minutes**.
++ The distribution of riding_time is much more Narrow for members. **Confirmed by the Standard Deviation:**
+
+```{r Standard deviation riding_time}
+sd(time_all_casuals$riding_time) 
+sd(time_all_member$riding_time)
+  
+```
+
++ Cyclistic should evaluate what makes riders who ride for a mid to long time not use the membership.
+
+#### **2.3.4 Regression: Casuals impact on riding time**
+
++ Trend of how the % of Casual riders impacts the average riding_time per station
+
++ we take the 212 Stations which have the most casual riders in Percent from **Chapter 2.2.3** :
+
+```{r creating Df and Linear Model for Trend analysis}
+most_casual_riders <- total_station_casual$start_station_id[1:212]
+most_casual_perc <- total_station_casual$perc_member_casual[1:212]
+
+mean_casual_station <- data.frame(nrows = 212)
+
+mean_casual_station <- cbind(mean_casual_station,start_station_id = c(most_casual_riders))
+mean_casual_station <- cbind(mean_casual_station,perc_casual = c(most_casual_perc))
+
+mean_list <- c()
+
+for (i in most_casual_riders){
+mean_list <- append(mean_list, mean(subset(time_all, start_station_id == i)$riding_time)) 
+}
+
+mean_casual_station <- cbind(mean_casual_station, mean_riding_time = c(mean_list))
+cor(mean_casual_station$mean_riding_time, mean_casual_station$perc_casual)
+head(mean_casual_station)
+summary(lm(perc_casual~mean_riding_time,data=mean_casual_station))
+
+```
+
++ A Linear Model like above shows the Positive significant influence of  the percentage of casuals on to the mean riding time. It also describes R^2 = **66.4%** of the Riding_Time variable.
+
++ **Visualization:**
+
+```{r Plotting percentage of casuals vs. riding time}
+
+trend_casual_time <-ggplot(mean_casual_station, aes(x = perc_casual, y = mean_riding_time)) +
+  geom_point() +
+  geom_smooth( , se=FALSE)
+
+trend_casual_time <- trend_casual_time + expand_limits(x = 0, y = 0)
+
+trend_casual_time<- trend_casual_time + scale_x_continuous(expand = c(0, 0)) + scale_y_continuous(expand = c(0, 0))
+
+trend_casual_time
+
+```
+
+### **2.4 Distance**
+#### **2.4.1 Distance and Time**
+
++ We can not examine a distance if the end station does equal the starting station so we rule these points out.
+
++ Our assumption for this chapter has to be that the traveled distance to the end point is a straight line which is not realistic (on average the result should still show a certain trend).
+
+First we examine the time it takes for a casual to ride a certain distance in comparison to a member. DF from **chapter 2.3.2**
+
+```{r create Distance Df and attach to location df}
+
+time_distance <- time_all %>%
+  subset(., start_station_id != end_station_id) 
+  
+time_distance$distance_m <- round(distHaversine(time_distance[,10:11], time_distance[,12:13]))
+
+time_distance$distance_per_minute <- (time_distance$distance_m / time_distance$riding_time)
+
+head(time_distance$distance_per_minute)
+head(time_distance$distance_m)
+subset_casual <-subset(time_distance, member_casual == "casual") 
+  
+mean(subset_casual$distance_m)
+
+subset_member <- subset(time_distance, member_casual == "member") 
+  
+mean(subset_member$distance_m)
+
+mean(subset_casual$distance_m)/mean(subset_member$distance_m)*100
+```
+
++ Casuals ride **9%** more on an average ride.
+
+#### **2.4.2 Distance/Time Casuals vs. Members**
+
+```{r correlate distance and Casual status Box}
+
+time_distance_casual <- subset(time_distance, member_casual == "casual")
+
+casual <- mean(time_distance_casual$distance_per_minute)
+ggplot(time_distance_casual, aes(distance_per_minute)) +
+  geom_boxplot() +
+  ggtitle("Casuals")
+
+```
+```{r correlate distance and Casual status Hist}
+
+ggplot(time_distance_casual, aes(x = distance_per_minute)) +
+  geom_histogram(binwidth = 1) + 
+  ggtitle("Casuals")
+
+```
+```{r correlate distance and Member status box}
+time_distance_member <- subset(time_distance, member_casual == "member")
+
+
+member <- mean(time_distance_member$distance_per_minute)
+
+
+ggplot(time_distance_member, aes(x = distance_per_minute)) +
+  geom_boxplot() +
+  ggtitle("Members")
+
+```
+```{r correlate distance and Member status Hist}
+
+ggplot(time_distance_member, aes(x = distance_per_minute)) +
+  geom_histogram(binwidth = 1) +
+  ggtitle("Members")
+
+
+(member / casual) * 100
+```
+
++ Members ride 31.42% faster per minute on average. 
++ Are they sportier ?
+
+##### **2.4.2.1 Are Members Sportier than Casual Riders**
+
++ Before we take a quick Conclusion we want to find out what influenced the location has on the traveled distance since we assumed a very simplistic model here. Using the DF from the Capitel **Time**.
+
++ We compare the averages of the 212 stations we explored before for each member and casuals to avoid bias by location (ruling out differences in traffic and routes). 
+
+```{r bias correlation}
+#creating empty vectors
+
+mean_list_distance_casual <- c()
+mean_list_distance_member <- c()
+mean_list_distance <- c()
+
+# loop to build the means under each circumstance for distance/minute
+for (i in most_casual_riders){
+mean_list_distance_casual <- append(mean_list_distance_casual, mean(subset(time_distance_casual, start_station_id == i)$distance_per_minute))
+
+mean_list_distance_member <- append(mean_list_distance_member, mean(subset(time_distance_member, start_station_id == i)$distance_per_minute))
+
+mean_list_distance <- append(mean_list_distance, mean(subset(time_distance, start_station_id == i)$distance_per_minute))
+}
+
+mean(mean_list_distance_member / mean_list_distance_casual)*100
+
+mean_casual_station <- cbind(mean_casual_station, mean_distance_minute = c(mean_list_distance))
+
+summary(lm(perc_casual~mean_distance_minute + mean_riding_time, data=mean_casual_station))
+
+summary(lm(mean_distance_minute ~ mean_riding_time, data=mean_casual_station))
+```
+
+
+The Mean for each station suggests that the members ride on Average **32.45%** faster than casual riders, which suggests that the starting station has no significant influence on the Speed. But the Linear model suggests that the distance_minute is not significant when we add it to the linear model from chapter 3 which is why the linear model does not explain more with adding the variable of **mean_distance_time** (R^2 = 66.11%).
+That is what the p value 0.652 > 0.05 suggests.
+
+#### **Correlation: distance/minute <-> %casuals/station**
+
+```{r Distance_m vs. casuals per station}
+
+trend_casual_distance <- ggplot(mean_casual_station, aes(x = mean_riding_time, y =mean_distance_minute )) +
+  geom_point() +
+  geom_smooth(, se=FALSE) +
+  ggtitle("Regression mean_riding_time | mean_distance")
+trend_casual_distance <- trend_casual_distance + expand_limits(x = 0, y = 0)
+
+trend_casual_distance <- trend_casual_distance + scale_x_continuous(expand = c(0, 0)) + scale_y_continuous(expand = c(0, 0))
+
+trend_casual_distance
+
+```
+```{r trend_distance 2 } 
+trend_casual_distance <-ggplot(mean_casual_station, aes(x = perc_casual, y = mean_distance_minute)) +
+  geom_point() +
+  geom_smooth(, se=FALSE) +
+  ggtitle("Regression perc_casual | mean_distance")
+trend_casual_distance <- trend_casual_distance + expand_limits(x = 0, y = 0)
+
+trend_casual_distance <- trend_casual_distance + scale_x_continuous(expand = c(0, 0)) + scale_y_continuous(expand = c(0, 0))
+
+head(trend_casual_distance)
+
+```
+
+
++ As a linear Model does not represent our Data fully we need to take a look at the Trend in the Graphs above. The Scattering of the mean_distance in comparison to the mean_riding_time seems very similar. The Trend line also suggests a somewhat linear relationship between the two but at the edges the linearity is switching over to a logarithmic relationship.
+
++ In the end it is not Clear if the members are sportier the Data can not support the Claim since the distance/time does not have a significant influence on the membership. 
+
+
+
+#### Further exploration with Tableau:
+
+See Full Dashboard here:
+link zu tableau dashboard
+
+
+##### Expand on Chapter 1.2
+
++ From Chapter 1.2 we found out what Stations are most important to look at but we can not see if there are geographical differences just by looking at the raw Data.
+
++ Data: counts of members and casuals in all locations
+
+```{r Export CSV for Tableu}
+
+total_station_location <- count(group_by(data_all,start_station_id), member_casual=member_casual)
+
+location_lat_lng <- aggregate(start_lat ~ start_station_id, data=data_all, FUN=mean)
+
+location_lat_lng$start_lng <- aggregate(start_lng ~ start_station_id, data=data_all, FUN=mean)$start_lng
+
+location<- merge(total_station_location, location_lat_lng, by.x = 1, by.y = 1, all.x = TRUE)
+
+location_casual <- total_station_location %>%
+  subset(. , member_casual == "casual")
+
+location_member <- total_station_location %>%
+  subset(. , member_casual == "member")
+
+difference_riders <-merge(location_casual, location_member, by.x = 1, by.y = 1, all.x = TRUE) %>%
+  mutate(difference_casual_member = n.x - n.y)
+
+location <- merge(location, select(difference_riders, start_station_id, difference_casual_member), by.x = 1, by.y = 1, all.x = TRUE)
+```
+
++ We plot the whole dataset in Tableau and get the Following distribution as a results:
+
+
+
+#### 2.4 Compare Seasonal Time shifts
+
+
++ Time of the Year -> relationship to members and casuals
+
+
+
+
+## Conclusion

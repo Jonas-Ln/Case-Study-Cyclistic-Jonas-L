@@ -1,0 +1,1411 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+
+
+<title>Detailed Report</title>
+
+<script src="site_libs/header-attrs-2.14/header-attrs.js"></script>
+<script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/cosmo.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<style>h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }</style>
+<script src="site_libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
+<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+
+
+<style type="text/css">
+  code {
+    white-space: pre;
+  }
+  .sourceCode {
+    overflow: visible;
+  }
+</style>
+<style type="text/css" data-origin="pandoc">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+
+</style>
+<script>
+// apply pandoc div.sourceCode style to pre.sourceCode instead
+(function() {
+  var sheets = document.styleSheets;
+  for (var i = 0; i < sheets.length; i++) {
+    if (sheets[i].ownerNode.dataset["origin"] !== "pandoc") continue;
+    try { var rules = sheets[i].cssRules; } catch (e) { continue; }
+    for (var j = 0; j < rules.length; j++) {
+      var rule = rules[j];
+      // check if there is a div.sourceCode rule
+      if (rule.type !== rule.STYLE_RULE || rule.selectorText !== "div.sourceCode") continue;
+      var style = rule.style.cssText;
+      // check if color or background-color is set
+      if (rule.style.color === '' && rule.style.backgroundColor === '') continue;
+      // replace div.sourceCode by a pre.sourceCode rule
+      sheets[i].deleteRule(j);
+      sheets[i].insertRule('pre.sourceCode{' + style + '}', j);
+    }
+  }
+})();
+</script>
+
+
+
+
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+details > summary > p:only-child {
+  display: inline;
+}
+pre code {
+  padding: 0;
+}
+</style>
+
+
+<style type="text/css">
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #adb5bd;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script type="text/javascript">
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.tab('show');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+
+  // Navbar adjustments
+  var navHeight = $(".navbar").first().height() + 15;
+  var style = document.createElement('style');
+  var pt = "padding-top: " + navHeight + "px; ";
+  var mt = "margin-top: -" + navHeight + "px; ";
+  var css = "";
+  // offset scroll position for anchor links (for fixed navbar)
+  for (var i = 1; i <= 6; i++) {
+    css += ".section h" + i + "{ " + pt + mt + "}\n";
+  }
+  style.innerHTML = "body {" + pt + "padding-bottom: 40px; }\n" + css;
+  document.head.appendChild(style);
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+
+
+
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+@media print {
+.toc-content {
+  /* see https://github.com/w3c/csswg-drafts/issues/4434 */
+  float: right;
+}
+}
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+
+</style>
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row">
+<div class="col-xs-12 col-sm-4 col-md-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-bs-toggle="collapse" data-target="#navbar" data-bs-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">Case Study - Cyclistic</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="index.html">Home</a>
+</li>
+<li class="dropdown-header">Findings Report</li>
+<li>
+  <a href="Journal.html">Detailed Report</a>
+</li>
+<li>
+  <a href="Links.html">Links</a>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div id="header">
+
+
+
+<h1 class="title toc-ignore">Detailed Report</h1>
+
+</div>
+
+
+<div id="load-files-and-packages" class="section level4">
+<h4>Load files and packages:</h4>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(geosphere)</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>data_all <span class="ot">&lt;-</span> <span class="fu">list.files</span>(<span class="at">path =</span> <span class="st">&quot;/Users/jonaslenz/Case Study Cyclistic/Data Sets Used&quot;</span>, <span class="at">pattern =</span> <span class="st">&quot;May2021_to_April2022_Cyclist_Data.csv&quot;</span>, <span class="at">full.names =</span> <span class="cn">TRUE</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">lapply</span>(read_csv) <span class="sc">%&gt;%</span>                        </span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>  bind_rows</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>data_all_before_mapulation <span class="ot">&lt;-</span> data_all</span></code></pre></div>
+</div>
+<div id="data-cleaning-with-r" class="section level2">
+<h2>1. Data Cleaning with R</h2>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>data_all <span class="ot">&lt;-</span> data_all[<span class="fu">order</span>(data_all<span class="sc">$</span>started_at),]</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(data_all)</span></code></pre></div>
+<pre><code>## Rows: 5,723,532
+## Columns: 14
+## $ ...1               &lt;dbl&gt; 39495, 273781, 34832, 16811, 131422, 9916, 51657, 2…
+## $ ride_id            &lt;chr&gt; &quot;0DA46DD62F111D09&quot;, &quot;FF009F812ADAFB3E&quot;, &quot;623C22F8DE…
+## $ rideable_type      &lt;chr&gt; &quot;electric_bike&quot;, &quot;classic_bike&quot;, &quot;electric_bike&quot;, &quot;…
+## $ started_at         &lt;dttm&gt; 2021-04-01 00:03:18, 2021-04-01 00:03:47, 2021-04-…
+## $ ended_at           &lt;dttm&gt; 2021-04-01 00:30:59, 2021-04-01 00:23:26, 2021-04-…
+## $ start_station_name &lt;chr&gt; &quot;Western Ave &amp; Howard St&quot;, &quot;LaSalle St &amp; Illinois S…
+## $ start_station_id   &lt;chr&gt; &quot;527&quot;, &quot;13430&quot;, NA, &quot;TA1307000131&quot;, &quot;KA1504000133&quot;,…
+## $ end_station_name   &lt;chr&gt; &quot;Campbell Ave &amp; Fullerton Ave&quot;, &quot;Wentworth Ave &amp; 24…
+## $ end_station_id     &lt;chr&gt; &quot;15648&quot;, &quot;TA1308000026&quot;, NA, &quot;13045&quot;, &quot;TA1309000025…
+## $ start_lat          &lt;dbl&gt; 42.01888, 41.89076, 41.72000, 41.88688, 41.90236, 4…
+## $ start_lng          &lt;dbl&gt; -87.69008, -87.63170, -87.62000, -87.62603, -87.627…
+## $ end_lat            &lt;dbl&gt; 41.92465, 41.85008, 41.70000, 41.89399, 41.94366, 4…
+## $ end_lng            &lt;dbl&gt; -87.68929, -87.63214, -87.65000, -87.62932, -87.648…
+## $ member_casual      &lt;chr&gt; &quot;member&quot;, &quot;member&quot;, &quot;member&quot;, &quot;member&quot;, &quot;member&quot;, &quot;…</code></pre>
+<ul>
+<li>Deleting NA entries:</li>
+</ul>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>data_all <span class="ot">&lt;-</span> <span class="fu">drop_na</span>(data_all)</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(data_all)</span></code></pre></div>
+<pre><code>## Rows: 4,641,395
+## Columns: 14
+## $ ...1               &lt;dbl&gt; 39495, 273781, 16811, 131422, 9916, 51657, 251943, …
+## $ ride_id            &lt;chr&gt; &quot;0DA46DD62F111D09&quot;, &quot;FF009F812ADAFB3E&quot;, &quot;8089677A94…
+## $ rideable_type      &lt;chr&gt; &quot;electric_bike&quot;, &quot;classic_bike&quot;, &quot;classic_bike&quot;, &quot;e…
+## $ started_at         &lt;dttm&gt; 2021-04-01 00:03:18, 2021-04-01 00:03:47, 2021-04-…
+## $ ended_at           &lt;dttm&gt; 2021-04-01 00:30:59, 2021-04-01 00:23:26, 2021-04-…
+## $ start_station_name &lt;chr&gt; &quot;Western Ave &amp; Howard St&quot;, &quot;LaSalle St &amp; Illinois S…
+## $ start_station_id   &lt;chr&gt; &quot;527&quot;, &quot;13430&quot;, &quot;TA1307000131&quot;, &quot;KA1504000133&quot;, &quot;13…
+## $ end_station_name   &lt;chr&gt; &quot;Campbell Ave &amp; Fullerton Ave&quot;, &quot;Wentworth Ave &amp; 24…
+## $ end_station_id     &lt;chr&gt; &quot;15648&quot;, &quot;TA1308000026&quot;, &quot;13045&quot;, &quot;TA1309000025&quot;, &quot;…
+## $ start_lat          &lt;dbl&gt; 42.01888, 41.89076, 41.88688, 41.90236, 41.97835, 4…
+## $ start_lng          &lt;dbl&gt; -87.69008, -87.63170, -87.62603, -87.62783, -87.659…
+## $ end_lat            &lt;dbl&gt; 41.92465, 41.85008, 41.89399, 41.94366, 41.96797, 4…
+## $ end_lng            &lt;dbl&gt; -87.68929, -87.63214, -87.62932, -87.64884, -87.650…
+## $ member_casual      &lt;chr&gt; &quot;member&quot;, &quot;member&quot;, &quot;member&quot;, &quot;member&quot;, &quot;member&quot;, &quot;…</code></pre>
+<p>Dropped Rows: <strong>1,082,137</strong> = 5,723,532 - 4,641,395</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">count</span>(data_all, <span class="at">vars =</span> member_casual)</span></code></pre></div>
+<pre><code>## # A tibble: 2 × 2
+##   vars         n
+##   &lt;chr&gt;    &lt;int&gt;
+## 1 casual 2044339
+## 2 member 2597056</code></pre>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">count</span>(data_all_before_mapulation, <span class="at">vars =</span> member_casual)</span></code></pre></div>
+<pre><code>## # A tibble: 2 × 2
+##   vars         n
+##   &lt;chr&gt;    &lt;int&gt;
+## 1 casual 2546542
+## 2 member 3176990</code></pre>
+<p>Compared casuals are nearly riding as much as Members in Total. The NA in the data seem random judging from the relative equality in reduction of members and casuals from the Data Frame. Therefore this can be assumed as Random noise and excluded.</p>
+</div>
+<div id="analysis-with-r" class="section level2">
+<h2>2. Analysis with R</h2>
+<div id="bike-types" class="section level3">
+<h3>2.1 Bike Types</h3>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">count</span>(<span class="fu">filter</span>(data_all, rideable_type<span class="sc">==</span><span class="st">&quot;classic_bike&quot;</span> ), <span class="at">vars =</span> member_casual)</span></code></pre></div>
+<pre><code>## # A tibble: 2 × 2
+##   vars         n
+##   &lt;chr&gt;    &lt;int&gt;
+## 1 casual 1252609
+## 2 member 1989380</code></pre>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">count</span>(<span class="fu">filter</span>(data_all, rideable_type<span class="sc">==</span><span class="st">&quot;electric_bike&quot;</span> ), <span class="at">vars =</span> member_casual)</span></code></pre></div>
+<pre><code>## # A tibble: 2 × 2
+##   vars        n
+##   &lt;chr&gt;   &lt;int&gt;
+## 1 casual 488206
+## 2 member 607676</code></pre>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">count</span>(<span class="fu">filter</span>(data_all, rideable_type<span class="sc">==</span><span class="st">&quot;docked_bike&quot;</span> ), <span class="at">vars =</span> member_casual)</span></code></pre></div>
+<pre><code>## # A tibble: 1 × 2
+##   vars        n
+##   &lt;chr&gt;   &lt;int&gt;
+## 1 casual 303524</code></pre>
+<ul>
+<li>38% of the classic_bikes are used by casual members</li>
+<li>44.55% of the electric_bikes are used by casual members</li>
+<li>The docked_bikes are only used by casual members</li>
+</ul>
+</div>
+<div id="users-per-location-id" class="section level3">
+<h3>2.2 Users per Location ID</h3>
+<div id="highest-count-of-riders-per-type" class="section level5">
+<h5>2.2.1 Highest Count of riders per type:</h5>
+<p>We use this in order to get a glimpse of what stations might be most important for the Analysis.</p>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>count_station_id_member <span class="ot">&lt;-</span> <span class="fu">count</span>(<span class="fu">group_by</span>(data_all,start_station_id), <span class="at">vars=</span>member_casual)</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>count_station_id_member <span class="ot">&lt;-</span> count_station_id_member[<span class="fu">order</span>(count_station_id_member<span class="sc">$</span>n, <span class="at">decreasing =</span> <span class="cn">TRUE</span>), ]</span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(count_station_id_member)</span></code></pre></div>
+<pre><code>## # A tibble: 6 × 3
+## # Groups:   start_station_id [6]
+##   start_station_id vars       n
+##   &lt;chr&gt;            &lt;chr&gt;  &lt;int&gt;
+## 1 13022            casual 65428
+## 2 13300            casual 34230
+## 3 13008            casual 31875
+## 4 LF-005           casual 28617
+## 5 13042            casual 28543
+## 6 KA1503000043     member 24186</code></pre>
+</div>
+<div id="highest-count-of-riders-in-total" class="section level5">
+<h5>2.2.2 Highest Count of riders in Total:</h5>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>count_start_station_id <span class="ot">&lt;-</span> <span class="fu">count</span>(<span class="fu">group_by</span>(data_all,start_station_id), <span class="at">vars=</span>start_station_id)</span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>count_start_station_id <span class="ot">&lt;-</span> count_start_station_id[<span class="fu">order</span>(count_start_station_id<span class="sc">$</span>n, <span class="at">decreasing =</span> <span class="cn">TRUE</span>), ]</span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(count_start_station_id)</span></code></pre></div>
+<pre><code>## # A tibble: 6 × 3
+## # Groups:   start_station_id [6]
+##   start_station_id vars             n
+##   &lt;chr&gt;            &lt;chr&gt;        &lt;int&gt;
+## 1 13022            13022        81546
+## 2 LF-005           LF-005       46327
+## 3 13300            13300        44181
+## 4 13042            13042        42627
+## 5 TA1308000050     TA1308000050 41982
+## 6 13008            13008        40466</code></pre>
+</div>
+<div id="exlude-low-casual-stations" class="section level4">
+<h4>2.2.3 Exlude low Casual Stations</h4>
+<p><strong>Next steps:</strong></p>
+<ul>
+<li><p>Merge the 2 Tables and get the total number in order to evaluate the % of casual members per starting station. We do this because we want to know which stations are most successful for acquiring members so we can dive deeper into what reasons are behind that.</p></li>
+<li><p>By knowing which stations have the highest rate of casual riders we get to know where our approach to acquire members is most successful of course in relation to the number of total members. That is why all stations below the 75 percentile casual riders are dropped in order to focus on the most important ones.</p></li>
+</ul>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>total_station_casual <span class="ot">&lt;-</span> <span class="fu">merge</span>(count_start_station_id, count_station_id_member, <span class="at">by.x =</span> <span class="dv">1</span>, <span class="at">by.y =</span> <span class="dv">1</span>, <span class="at">all.x =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>total_station_casual <span class="ot">&lt;-</span> total_station_casual[<span class="sc">-</span><span class="fu">c</span>(<span class="dv">2</span>)] <span class="sc">%&gt;%</span></span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">riders_total =</span> n.x,</span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>         <span class="at">member_casual =</span> vars.y,</span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>         <span class="at">total_casual_member =</span> n.y)<span class="sc">%&gt;%</span></span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">perc_member_casual=</span>(total_casual_member<span class="sc">/</span>riders_total<span class="sc">*</span><span class="dv">100</span>))<span class="sc">%&gt;%</span></span>
+<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(. , <span class="sc">-</span>perc_member_casual)<span class="sc">%&gt;%</span></span>
+<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">subset</span>(.,member_casual <span class="sc">==</span> <span class="st">&quot;casual&quot;</span>)</span>
+<span id="cb20-9"><a href="#cb20-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mean</span>(total_station_casual<span class="sc">$</span>total_casual_member)</span></code></pre></div>
+<pre><code>## [1] 2416.476</code></pre>
+<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>  <span class="fu">quantile</span>(total_station_casual<span class="sc">$</span>total_casual_member)</span></code></pre></div>
+<pre><code>##       0%      25%      50%      75%     100% 
+##     1.00    73.00   613.00  3150.75 65428.00</code></pre>
+<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>total_station_casual <span class="ot">&lt;-</span><span class="fu">subset</span>(total_station_casual, total_casual_member <span class="sc">&gt;=</span> <span class="fl">3150.75</span>)</span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(total_station_casual)<span class="sc">%&gt;%</span></span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(., start_station_id, riders_total, total_casual_member, perc_member_casual)</span></code></pre></div>
+<pre><code>##     start_station_id riders_total total_casual_member perc_member_casual
+## 109            15541        13623               11674           85.69331
+## 143            15544        27235               22476           82.52616
+## 156            13029         8428                6824           80.96820
+## 163            13022        81546               65428           80.23447
+## 178            13008        40466               31875           78.76983
+## 200            13300        44181               34230           77.47674</code></pre>
+<ul>
+<li>The dataset now contains <strong>212 Stations</strong>, which are most important for Cyclistic to Act on, in Descending order by the highest proportion of casual riders.</li>
+</ul>
+<p><strong>Check if we didnt exclude too much Data:</strong></p>
+<p><strong>The Dataframe contains:</strong></p>
+<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sum</span>(total_station_casual<span class="sc">$</span>total_casual_member)</span></code></pre></div>
+<pre><code>## [1] 1645291</code></pre>
+<p><strong>1,645,291</strong> out of <strong>2,044,339</strong> casuals from <strong>212</strong> biggest stations of casual riders.</p>
+</div>
+<div id="exlude-low-membbers-stations" class="section level4">
+<h4><strong>2.2.4 Exlude low Membbers Stations</strong></h4>
+<ul>
+<li>To get to know Differences between Members and Casuals we reverse the Task and do the Same from above to Members So to Expand on the above we reverse the task and get the Following result:</li>
+</ul>
+<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>total_station_member <span class="ot">&lt;-</span> <span class="fu">merge</span>(count_start_station_id, count_station_id_member, <span class="at">by.x =</span> <span class="dv">1</span>, <span class="at">by.y =</span> <span class="dv">1</span>, <span class="at">all.x =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>total_station_member <span class="ot">&lt;-</span> total_station_member[<span class="sc">-</span><span class="fu">c</span>(<span class="dv">2</span>)] <span class="sc">%&gt;%</span></span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">riders_total =</span> n.x,</span>
+<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a>         <span class="at">member_casual =</span> vars.y,</span>
+<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a>         <span class="at">total_casual_member =</span> n.y)<span class="sc">%&gt;%</span></span>
+<span id="cb28-6"><a href="#cb28-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">perc_member_casual=</span>(total_casual_member<span class="sc">/</span>riders_total<span class="sc">*</span><span class="dv">100</span>))<span class="sc">%&gt;%</span></span>
+<span id="cb28-7"><a href="#cb28-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(. , <span class="sc">-</span>perc_member_casual)<span class="sc">%&gt;%</span></span>
+<span id="cb28-8"><a href="#cb28-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">subset</span>(.,member_casual <span class="sc">==</span> <span class="st">&quot;member&quot;</span>)</span>
+<span id="cb28-9"><a href="#cb28-9" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(total_station_member<span class="sc">$</span>total_casual_member)</span></code></pre></div>
+<pre><code>## [1] 3117.714</code></pre>
+<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="fu">quantile</span>(total_station_member<span class="sc">$</span>total_casual_member)</span></code></pre></div>
+<pre><code>##    0%   25%   50%   75%  100% 
+##     1    26   821  5211 24186</code></pre>
+<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>total_station_member <span class="ot">&lt;-</span><span class="fu">subset</span>(total_station_member, total_casual_member <span class="sc">&gt;=</span> <span class="dv">5211</span>)</span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(total_station_member)<span class="sc">%&gt;%</span></span>
+<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(., start_station_id, riders_total, total_casual_member, perc_member_casual)</span></code></pre></div>
+<pre><code>##     start_station_id riders_total total_casual_member perc_member_casual
+## 111            13216         9831                8408           85.52538
+## 117            13285         6770                5762           85.11078
+## 118     TA1309000064         9930                8436           84.95468
+## 120            13332        17099               14511           84.86461
+## 140     TA1307000130        10852                9004           82.97088
+## 147     TA1307000121        10467                8552           81.70440</code></pre>
+<p>The <strong>next Step</strong> is to evaluate what role riding time plays in the context of casual_riders and how it differs from members.</p>
+</div>
+</div>
+<div id="time" class="section level3">
+<h3><strong>2.3 Time</strong></h3>
+<div id="mean-riding-time-per-rider" class="section level4">
+<h4><strong>2.3.1 Mean Riding-Time per rider</strong></h4>
+<div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>time_data_all <span class="ot">&lt;-</span> data_all<span class="sc">%&gt;%</span></span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">riding_time =</span> <span class="fu">round</span>(<span class="fu">as.vector</span>(ended_at <span class="sc">-</span> started_at)<span class="sc">/</span><span class="dv">60</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>( . ,<span class="sc">-</span>riding_time)</span>
+<span id="cb34-4"><a href="#cb34-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-5"><a href="#cb34-5" aria-hidden="true" tabindex="-1"></a><span class="co">#Select View</span></span>
+<span id="cb34-6"><a href="#cb34-6" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(<span class="fu">arrange</span>(time_data_all, riding_time)) <span class="sc">%&gt;%</span></span>
+<span id="cb34-7"><a href="#cb34-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(., start_station_id, member_casual, riding_time)</span></code></pre></div>
+<pre><code>## # A tibble: 6 × 3
+##   start_station_id member_casual riding_time
+##   &lt;chr&gt;            &lt;chr&gt;               &lt;dbl&gt;
+## 1 13128            casual                -56
+## 2 13191            member                -54
+## 3 13243            member                -54
+## 4 TA1309000023     casual                -53
+## 5 13191            casual                -53
+## 6 RN-              casual                -51</code></pre>
+<div class="sourceCode" id="cb36"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Select View</span></span>
+<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(time_data_all) <span class="sc">%&gt;%</span></span>
+<span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(., start_station_id, member_casual, riding_time)</span></code></pre></div>
+<pre><code>## # A tibble: 6 × 3
+##   start_station_id member_casual riding_time
+##   &lt;chr&gt;            &lt;chr&gt;               &lt;dbl&gt;
+## 1 TA1305000011     casual              55944
+## 2 13022            casual              55692
+## 3 TA1305000035     casual              53922
+## 4 KA1503000012     casual              52701
+## 5 13085            casual              49107
+## 6 TA1307000131     casual              47777</code></pre>
+<div class="sourceCode" id="cb38"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(time_data_all<span class="sc">$</span>riding_time)</span></code></pre></div>
+<pre><code>## [1] 21.35558</code></pre>
+<div class="sourceCode" id="cb40"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(time_data_all, <span class="fu">aes</span>(<span class="at">x =</span> riding_time)) <span class="sc">+</span></span>
+<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>(<span class="at">notch=</span><span class="cn">TRUE</span>)</span></code></pre></div>
+<p><img src="Journal_files/figure-html/Mean%20Time%20Casual-1.png" width="672" /></p>
+<ul>
+<li><p>On average riders using the Cyclist product are cycling <strong>ca. 21 minutes</strong>.</p></li>
+<li><p>The Highest and Lowest Values seem to be non significant <strong>outliers</strong> and we cut them as they do not represent our data. The Min Values especially below zero do not make any sense, but also 1 second riding_time for example is not anything we can expand upon.</p></li>
+<li><p>There are a lot of outliers as confirmed by the Boxplot above.</p></li>
+</ul>
+</div>
+<div id="cut-1-of-the-bottom-and-top" class="section level4">
+<h4><strong>2.3.2 Cut 1% of the bottom and Top</strong></h4>
+<div class="sourceCode" id="cb41"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="fu">quantile</span>(time_data_all<span class="sc">$</span>riding_time, <span class="fu">c</span>(.<span class="dv">99</span>))</span></code></pre></div>
+<pre><code>## 99% 
+## 129</code></pre>
+<div class="sourceCode" id="cb43"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="fu">quantile</span>(time_data_all<span class="sc">$</span>riding_time, <span class="fu">c</span>(.<span class="dv">01</span>))</span></code></pre></div>
+<pre><code>## 1% 
+##  1</code></pre>
+<div class="sourceCode" id="cb45"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(time_data_all<span class="sc">$</span>riding_time)</span></code></pre></div>
+<pre><code>## [1] 21.35558</code></pre>
+<div class="sourceCode" id="cb47"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a>time_all <span class="ot">&lt;-</span> <span class="fu">subset</span>(time_data_all, riding_time <span class="sc">&gt;=</span> <span class="dv">1</span> <span class="sc">&amp;</span> riding_time <span class="sc">&lt;=</span> <span class="dv">129</span>)</span>
+<span id="cb47-2"><a href="#cb47-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(time_all)</span></code></pre></div>
+<pre><code>## # A tibble: 6 × 15
+##     ...1 ride_id          rideable_type started_at          ended_at           
+##    &lt;dbl&gt; &lt;chr&gt;            &lt;chr&gt;         &lt;dttm&gt;              &lt;dttm&gt;             
+## 1 292649 97192AE375753B66 classic_bike  2021-04-02 21:42:12 2021-04-02 23:50:50
+## 2  87098 FB83A0F1CA74A5C4 docked_bike   2021-04-03 03:15:46 2021-04-03 05:24:33
+## 3 300577 3A7B43070C572A1A docked_bike   2021-04-03 12:45:26 2021-04-03 14:54:10
+## 4 310181 0B00938460D56814 docked_bike   2021-04-03 12:46:39 2021-04-03 14:55:38
+## 5 266414 9210C254AF169781 classic_bike  2021-04-03 13:47:15 2021-04-03 15:56:27
+## 6 282329 7EEE94AFB81836C6 classic_bike  2021-04-03 13:47:44 2021-04-03 15:56:17
+## # … with 10 more variables: start_station_name &lt;chr&gt;, start_station_id &lt;chr&gt;,
+## #   end_station_name &lt;chr&gt;, end_station_id &lt;chr&gt;, start_lat &lt;dbl&gt;,
+## #   start_lng &lt;dbl&gt;, end_lat &lt;dbl&gt;, end_lng &lt;dbl&gt;, member_casual &lt;chr&gt;,
+## #   riding_time &lt;dbl&gt;</code></pre>
+<div class="sourceCode" id="cb49"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(time_all<span class="sc">$</span>riding_time)</span></code></pre></div>
+<pre><code>## [1] 17.46532</code></pre>
+<div class="sourceCode" id="cb51"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(time_all, <span class="fu">aes</span>(<span class="at">x =</span> riding_time)) <span class="sc">+</span></span>
+<span id="cb51-2"><a href="#cb51-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>() <span class="sc">+</span></span>
+<span id="cb51-3"><a href="#cb51-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">&quot;Boxplot Riding_time&quot;</span>)</span></code></pre></div>
+<p><img src="Journal_files/figure-html/remove%20of%20Data-1.png" width="672" /></p>
+<div class="sourceCode" id="cb52"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(time_all, <span class="fu">aes</span>(<span class="at">x =</span> riding_time)) <span class="sc">+</span></span>
+<span id="cb52-2"><a href="#cb52-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>() <span class="sc">+</span></span>
+<span id="cb52-3"><a href="#cb52-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">&quot;Histogramm riding_time&quot;</span>)</span></code></pre></div>
+<p><img src="Journal_files/figure-html/unnamed-chunk-1-1.png" width="600px" height="600px" /></p>
+<ul>
+<li><p>By removing outliers the Average dropped by <strong>ca. 4 Minutes</strong>.</p></li>
+<li><p>Above <strong>40 Minutes</strong> there are still many outliers.</p></li>
+<li><p>Histogramm: the most data points are distributed on the left side, but the mean is increased by many smaller data points at the right side.</p></li>
+</ul>
+</div>
+<div id="mean-time-casual-riders" class="section level4">
+<h4><strong>2.3.3 Mean time Casual riders</strong></h4>
+<ul>
+<li>Now we aggregate the data by only displaying casuals first and then members.</li>
+</ul>
+<div class="sourceCode" id="cb53"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb53-1"><a href="#cb53-1" aria-hidden="true" tabindex="-1"></a>time_all_casuals <span class="ot">&lt;-</span> <span class="fu">subset</span>(time_all, member_casual <span class="sc">==</span> <span class="st">&quot;casual&quot;</span>)</span>
+<span id="cb53-2"><a href="#cb53-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb53-3"><a href="#cb53-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb53-4"><a href="#cb53-4" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(time_all_casuals<span class="sc">$</span>riding_time)</span></code></pre></div>
+<pre><code>## [1] 23.6062</code></pre>
+<div class="sourceCode" id="cb55"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb55-1"><a href="#cb55-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(time_all_casuals, <span class="fu">aes</span>(<span class="at">x =</span> riding_time)) <span class="sc">+</span></span>
+<span id="cb55-2"><a href="#cb55-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>() <span class="sc">+</span></span>
+<span id="cb55-3"><a href="#cb55-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">&quot;Boxplot Riding_time per Casual&quot;</span>)</span></code></pre></div>
+<p><img src="Journal_files/figure-html/Casual%20Time%20box-1.png" width="672" /></p>
+<div class="sourceCode" id="cb56"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb56-1"><a href="#cb56-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(time_all_casuals, <span class="fu">aes</span>(<span class="at">x =</span> riding_time)) <span class="sc">+</span></span>
+<span id="cb56-2"><a href="#cb56-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">binwidth =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb56-3"><a href="#cb56-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">&quot;Histogramm Riding_time per Casual&quot;</span>)</span></code></pre></div>
+<p><img src="Journal_files/figure-html/Casual%20Time%20Hist-1.png" width="672" /></p>
+<ul>
+<li>Casual riders have a really high riding_time. But the most important part is the riding time <strong>1 to 50</strong> minutes contains most of the casual riders.</li>
+<li>the mean riding time of casual riders is <strong>ca. 23 Minutes</strong></li>
+</ul>
+<div class="sourceCode" id="cb57"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb57-1"><a href="#cb57-1" aria-hidden="true" tabindex="-1"></a>time_all_member <span class="ot">&lt;-</span> <span class="fu">subset</span>(time_all, member_casual <span class="sc">==</span> <span class="st">&quot;member&quot;</span>)</span>
+<span id="cb57-2"><a href="#cb57-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-3"><a href="#cb57-3" aria-hidden="true" tabindex="-1"></a>time_all_member</span></code></pre></div>
+<pre><code>## # A tibble: 2,567,475 × 15
+##      ...1 ride_id          rideable_type started_at          ended_at           
+##     &lt;dbl&gt; &lt;chr&gt;            &lt;chr&gt;         &lt;dttm&gt;              &lt;dttm&gt;             
+##  1 282329 7EEE94AFB81836C6 classic_bike  2021-04-03 13:47:44 2021-04-03 15:56:17
+##  2 198186 F8A46808323A03DF classic_bike  2021-04-07 16:51:32 2021-04-07 19:00:14
+##  3 148789 67AB06F93FBF96AE electric_bike 2021-04-14 17:37:21 2021-04-14 19:45:57
+##  4 224826 D065049F0A03B4E7 classic_bike  2021-04-17 13:29:45 2021-04-17 15:38:41
+##  5 731678 2ABCCC945F5A95FD classic_bike  2021-05-02 10:27:08 2021-05-02 12:36:22
+##  6 460696 3679F888FB6C279D electric_bike 2021-05-15 22:17:52 2021-05-16 00:26:46
+##  7 506073 7C98DB6ED149F2BD classic_bike  2021-05-18 09:33:17 2021-05-18 11:42:29
+##  8 460616 2406203A73332112 classic_bike  2021-05-22 10:49:51 2021-05-22 12:58:57
+##  9 513928 0DF812A7F84C04D4 classic_bike  2021-05-22 12:22:29 2021-05-22 14:31:45
+## 10 569454 51E4B5017A451FC1 electric_bike 2021-05-28 22:09:03 2021-05-29 00:17:35
+## # … with 2,567,465 more rows, and 10 more variables: start_station_name &lt;chr&gt;,
+## #   start_station_id &lt;chr&gt;, end_station_name &lt;chr&gt;, end_station_id &lt;chr&gt;,
+## #   start_lat &lt;dbl&gt;, start_lng &lt;dbl&gt;, end_lat &lt;dbl&gt;, end_lng &lt;dbl&gt;,
+## #   member_casual &lt;chr&gt;, riding_time &lt;dbl&gt;</code></pre>
+<div class="sourceCode" id="cb59"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb59-1"><a href="#cb59-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(time_all_member<span class="sc">$</span>riding_time)</span></code></pre></div>
+<pre><code>## [1] 12.70632</code></pre>
+<div class="sourceCode" id="cb61"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb61-1"><a href="#cb61-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(time_all_member, <span class="fu">aes</span>(<span class="at">x =</span> riding_time)) <span class="sc">+</span></span>
+<span id="cb61-2"><a href="#cb61-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>() <span class="sc">+</span></span>
+<span id="cb61-3"><a href="#cb61-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">&quot;Boxplot Riding_time per member&quot;</span>)</span></code></pre></div>
+<p><img src="Journal_files/figure-html/Member%20Time%20Box-1.png" width="672" /></p>
+<div class="sourceCode" id="cb62"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb62-1"><a href="#cb62-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(time_all_member, <span class="fu">aes</span>(<span class="at">x =</span> riding_time)) <span class="sc">+</span></span>
+<span id="cb62-2"><a href="#cb62-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">binwidth =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb62-3"><a href="#cb62-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">&quot;Histogramm Riding_time per member&quot;</span>)</span></code></pre></div>
+<p><img src="Journal_files/figure-html/Member%20Time%20Hist-1.png" width="672" /></p>
+<ul>
+<li>the mean riding time of members is <strong>ca. 13 Minutes</strong></li>
+<li>The mean riding_time is higher for Casuals than members by more than <strong>10 minutes</strong>.</li>
+<li>The distribution of riding_time is much more Narrow for members. <strong>Confirmed by the Standard Deviation:</strong></li>
+</ul>
+<div class="sourceCode" id="cb63"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb63-1"><a href="#cb63-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sd</span>(time_all_casuals<span class="sc">$</span>riding_time) </span></code></pre></div>
+<pre><code>## [1] 21.99483</code></pre>
+<div class="sourceCode" id="cb65"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb65-1"><a href="#cb65-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sd</span>(time_all_member<span class="sc">$</span>riding_time)</span></code></pre></div>
+<pre><code>## [1] 10.66348</code></pre>
+<ul>
+<li>Cyclistic should evaluate what makes riders who ride for a mid to long time not use the membership.</li>
+</ul>
+</div>
+<div id="regression-casuals-impact-on-riding-time" class="section level4">
+<h4><strong>2.3.4 Regression: Casuals impact on riding time</strong></h4>
+<ul>
+<li><p>Trend of how the % of Casual riders impacts the average riding_time per station</p></li>
+<li><p>we take the 212 Stations which have the most casual riders in Percent from <strong>Chapter 2.2.3</strong> :</p></li>
+</ul>
+<div class="sourceCode" id="cb67"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb67-1"><a href="#cb67-1" aria-hidden="true" tabindex="-1"></a>most_casual_riders <span class="ot">&lt;-</span> total_station_casual<span class="sc">$</span>start_station_id[<span class="dv">1</span><span class="sc">:</span><span class="dv">212</span>]</span>
+<span id="cb67-2"><a href="#cb67-2" aria-hidden="true" tabindex="-1"></a>most_casual_perc <span class="ot">&lt;-</span> total_station_casual<span class="sc">$</span>perc_member_casual[<span class="dv">1</span><span class="sc">:</span><span class="dv">212</span>]</span>
+<span id="cb67-3"><a href="#cb67-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb67-4"><a href="#cb67-4" aria-hidden="true" tabindex="-1"></a>mean_casual_station <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">nrows =</span> <span class="dv">212</span>)</span>
+<span id="cb67-5"><a href="#cb67-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb67-6"><a href="#cb67-6" aria-hidden="true" tabindex="-1"></a>mean_casual_station <span class="ot">&lt;-</span> <span class="fu">cbind</span>(mean_casual_station,<span class="at">start_station_id =</span> <span class="fu">c</span>(most_casual_riders))</span>
+<span id="cb67-7"><a href="#cb67-7" aria-hidden="true" tabindex="-1"></a>mean_casual_station <span class="ot">&lt;-</span> <span class="fu">cbind</span>(mean_casual_station,<span class="at">perc_casual =</span> <span class="fu">c</span>(most_casual_perc))</span>
+<span id="cb67-8"><a href="#cb67-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb67-9"><a href="#cb67-9" aria-hidden="true" tabindex="-1"></a>mean_list <span class="ot">&lt;-</span> <span class="fu">c</span>()</span>
+<span id="cb67-10"><a href="#cb67-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb67-11"><a href="#cb67-11" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> most_casual_riders){</span>
+<span id="cb67-12"><a href="#cb67-12" aria-hidden="true" tabindex="-1"></a>mean_list <span class="ot">&lt;-</span> <span class="fu">append</span>(mean_list, <span class="fu">mean</span>(<span class="fu">subset</span>(time_all, start_station_id <span class="sc">==</span> i)<span class="sc">$</span>riding_time)) </span>
+<span id="cb67-13"><a href="#cb67-13" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb67-14"><a href="#cb67-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb67-15"><a href="#cb67-15" aria-hidden="true" tabindex="-1"></a>mean_casual_station <span class="ot">&lt;-</span> <span class="fu">cbind</span>(mean_casual_station, <span class="at">mean_riding_time =</span> <span class="fu">c</span>(mean_list))</span>
+<span id="cb67-16"><a href="#cb67-16" aria-hidden="true" tabindex="-1"></a><span class="fu">cor</span>(mean_casual_station<span class="sc">$</span>mean_riding_time, mean_casual_station<span class="sc">$</span>perc_casual)</span></code></pre></div>
+<pre><code>## [1] 0.814872</code></pre>
+<div class="sourceCode" id="cb69"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb69-1"><a href="#cb69-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(mean_casual_station)</span></code></pre></div>
+<pre><code>##   nrows start_station_id perc_casual mean_riding_time
+## 1   212            15541    85.69331         35.29438
+## 2   212            15544    82.52616         29.18788
+## 3   212            13029    80.96820         28.87227
+## 4   212            13022    80.23447         31.56451
+## 5   212            13008    78.76983         32.55147
+## 6   212            13300    77.47674         32.66521</code></pre>
+<div class="sourceCode" id="cb71"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb71-1"><a href="#cb71-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(<span class="fu">lm</span>(perc_casual<span class="sc">~</span>mean_riding_time,<span class="at">data=</span>mean_casual_station))</span></code></pre></div>
+<pre><code>## 
+## Call:
+## lm(formula = perc_casual ~ mean_riding_time, data = mean_casual_station)
+## 
+## Residuals:
+##      Min       1Q   Median       3Q      Max 
+## -23.5625  -3.3720   0.0343   3.8971  18.7569 
+## 
+## Coefficients:
+##                  Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept)      16.09344    1.45204   11.08   &lt;2e-16 ***
+## mean_riding_time  1.63341    0.08018   20.37   &lt;2e-16 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 6.374 on 210 degrees of freedom
+## Multiple R-squared:  0.664,  Adjusted R-squared:  0.6624 
+## F-statistic:   415 on 1 and 210 DF,  p-value: &lt; 2.2e-16</code></pre>
+<ul>
+<li><p>A Linear Model like above shows the Positive significant influence of the percentage of casuals on to the mean riding time. It also describes R^2 = <strong>66.4%</strong> of the Riding_Time variable.</p></li>
+<li><p><strong>Visualization:</strong></p></li>
+</ul>
+<div class="sourceCode" id="cb73"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb73-1"><a href="#cb73-1" aria-hidden="true" tabindex="-1"></a>trend_casual_time <span class="ot">&lt;-</span><span class="fu">ggplot</span>(mean_casual_station, <span class="fu">aes</span>(<span class="at">x =</span> perc_casual, <span class="at">y =</span> mean_riding_time)) <span class="sc">+</span></span>
+<span id="cb73-2"><a href="#cb73-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb73-3"><a href="#cb73-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>( , <span class="at">se=</span><span class="cn">FALSE</span>)</span>
+<span id="cb73-4"><a href="#cb73-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb73-5"><a href="#cb73-5" aria-hidden="true" tabindex="-1"></a>trend_casual_time <span class="ot">&lt;-</span> trend_casual_time <span class="sc">+</span> <span class="fu">expand_limits</span>(<span class="at">x =</span> <span class="dv">0</span>, <span class="at">y =</span> <span class="dv">0</span>)</span>
+<span id="cb73-6"><a href="#cb73-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb73-7"><a href="#cb73-7" aria-hidden="true" tabindex="-1"></a>trend_casual_time<span class="ot">&lt;-</span> trend_casual_time <span class="sc">+</span> <span class="fu">scale_x_continuous</span>(<span class="at">expand =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">0</span>)) <span class="sc">+</span> <span class="fu">scale_y_continuous</span>(<span class="at">expand =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">0</span>))</span>
+<span id="cb73-8"><a href="#cb73-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb73-9"><a href="#cb73-9" aria-hidden="true" tabindex="-1"></a>trend_casual_time</span></code></pre></div>
+<p><img src="Journal_files/figure-html/Plotting%20percentage%20of%20casuals%20vs.%20riding%20time-1.png" width="672" /></p>
+</div>
+</div>
+<div id="distance" class="section level3">
+<h3><strong>2.4 Distance</strong></h3>
+<div id="distance-and-time" class="section level4">
+<h4><strong>2.4.1 Distance and Time</strong></h4>
+<ul>
+<li><p>We can not examine a distance if the end station does equal the starting station so we rule these points out.</p></li>
+<li><p>Our assumption for this chapter has to be that the traveled distance to the end point is a straight line which is not realistic (on average the result should still show a certain trend).</p></li>
+</ul>
+<p>First we examine the time it takes for a casual to ride a certain distance in comparison to a member. DF from <strong>chapter 2.3.2</strong></p>
+<div class="sourceCode" id="cb74"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb74-1"><a href="#cb74-1" aria-hidden="true" tabindex="-1"></a>time_distance <span class="ot">&lt;-</span> time_all <span class="sc">%&gt;%</span></span>
+<span id="cb74-2"><a href="#cb74-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">subset</span>(., start_station_id <span class="sc">!=</span> end_station_id) </span>
+<span id="cb74-3"><a href="#cb74-3" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb74-4"><a href="#cb74-4" aria-hidden="true" tabindex="-1"></a>time_distance<span class="sc">$</span>distance_m <span class="ot">&lt;-</span> <span class="fu">round</span>(<span class="fu">distHaversine</span>(time_distance[,<span class="dv">10</span><span class="sc">:</span><span class="dv">11</span>], time_distance[,<span class="dv">12</span><span class="sc">:</span><span class="dv">13</span>]))</span>
+<span id="cb74-5"><a href="#cb74-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb74-6"><a href="#cb74-6" aria-hidden="true" tabindex="-1"></a>time_distance<span class="sc">$</span>distance_per_minute <span class="ot">&lt;-</span> (time_distance<span class="sc">$</span>distance_m <span class="sc">/</span> time_distance<span class="sc">$</span>riding_time)</span>
+<span id="cb74-7"><a href="#cb74-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb74-8"><a href="#cb74-8" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(time_distance<span class="sc">$</span>distance_per_minute)</span></code></pre></div>
+<pre><code>## [1]  4.310078  1.379845  2.100775  2.100775 21.093023  3.558140</code></pre>
+<div class="sourceCode" id="cb76"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb76-1"><a href="#cb76-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(time_distance<span class="sc">$</span>distance_m)</span></code></pre></div>
+<pre><code>## [1]  556  178  271  271 2721  459</code></pre>
+<div class="sourceCode" id="cb78"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb78-1"><a href="#cb78-1" aria-hidden="true" tabindex="-1"></a>subset_casual <span class="ot">&lt;-</span><span class="fu">subset</span>(time_distance, member_casual <span class="sc">==</span> <span class="st">&quot;casual&quot;</span>) </span>
+<span id="cb78-2"><a href="#cb78-2" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb78-3"><a href="#cb78-3" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(subset_casual<span class="sc">$</span>distance_m)</span></code></pre></div>
+<pre><code>## [1] 1602.591</code></pre>
+<div class="sourceCode" id="cb80"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb80-1"><a href="#cb80-1" aria-hidden="true" tabindex="-1"></a>subset_member <span class="ot">&lt;-</span> <span class="fu">subset</span>(time_distance, member_casual <span class="sc">==</span> <span class="st">&quot;member&quot;</span>) </span>
+<span id="cb80-2"><a href="#cb80-2" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb80-3"><a href="#cb80-3" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(subset_member<span class="sc">$</span>distance_m)</span></code></pre></div>
+<pre><code>## [1] 1458.779</code></pre>
+<div class="sourceCode" id="cb82"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb82-1"><a href="#cb82-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(subset_casual<span class="sc">$</span>distance_m)<span class="sc">/</span><span class="fu">mean</span>(subset_member<span class="sc">$</span>distance_m)<span class="sc">*</span><span class="dv">100</span></span></code></pre></div>
+<pre><code>## [1] 109.8584</code></pre>
+<ul>
+<li>Casuals ride <strong>9%</strong> more on an average ride.</li>
+</ul>
+</div>
+<div id="distancetime-casuals-vs.-members" class="section level4">
+<h4><strong>2.4.2 Distance/Time Casuals vs. Members</strong></h4>
+<div class="sourceCode" id="cb84"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb84-1"><a href="#cb84-1" aria-hidden="true" tabindex="-1"></a>time_distance_casual <span class="ot">&lt;-</span> <span class="fu">subset</span>(time_distance, member_casual <span class="sc">==</span> <span class="st">&quot;casual&quot;</span>)</span>
+<span id="cb84-2"><a href="#cb84-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb84-3"><a href="#cb84-3" aria-hidden="true" tabindex="-1"></a>casual <span class="ot">&lt;-</span> <span class="fu">mean</span>(time_distance_casual<span class="sc">$</span>distance_per_minute)</span>
+<span id="cb84-4"><a href="#cb84-4" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(time_distance_casual, <span class="fu">aes</span>(distance_per_minute)) <span class="sc">+</span></span>
+<span id="cb84-5"><a href="#cb84-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>() <span class="sc">+</span></span>
+<span id="cb84-6"><a href="#cb84-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">&quot;Casuals&quot;</span>)</span></code></pre></div>
+<p><img src="Journal_files/figure-html/correlate%20distance%20and%20Casual%20status%20Box-1.png" width="672" /></p>
+<div class="sourceCode" id="cb85"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb85-1"><a href="#cb85-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(time_distance_casual, <span class="fu">aes</span>(<span class="at">x =</span> distance_per_minute)) <span class="sc">+</span></span>
+<span id="cb85-2"><a href="#cb85-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">binwidth =</span> <span class="dv">1</span>) <span class="sc">+</span> </span>
+<span id="cb85-3"><a href="#cb85-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">&quot;Casuals&quot;</span>)</span></code></pre></div>
+<p><img src="Journal_files/figure-html/correlate%20distance%20and%20Casual%20status%20Hist-1.png" width="672" /></p>
+<div class="sourceCode" id="cb86"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb86-1"><a href="#cb86-1" aria-hidden="true" tabindex="-1"></a>time_distance_member <span class="ot">&lt;-</span> <span class="fu">subset</span>(time_distance, member_casual <span class="sc">==</span> <span class="st">&quot;member&quot;</span>)</span>
+<span id="cb86-2"><a href="#cb86-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb86-3"><a href="#cb86-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb86-4"><a href="#cb86-4" aria-hidden="true" tabindex="-1"></a>member <span class="ot">&lt;-</span> <span class="fu">mean</span>(time_distance_member<span class="sc">$</span>distance_per_minute)</span>
+<span id="cb86-5"><a href="#cb86-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb86-6"><a href="#cb86-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb86-7"><a href="#cb86-7" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(time_distance_member, <span class="fu">aes</span>(<span class="at">x =</span> distance_per_minute)) <span class="sc">+</span></span>
+<span id="cb86-8"><a href="#cb86-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>() <span class="sc">+</span></span>
+<span id="cb86-9"><a href="#cb86-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">&quot;Members&quot;</span>)</span></code></pre></div>
+<p><img src="Journal_files/figure-html/correlate%20distance%20and%20Member%20status%20box-1.png" width="672" /></p>
+<div class="sourceCode" id="cb87"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb87-1"><a href="#cb87-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(time_distance_member, <span class="fu">aes</span>(<span class="at">x =</span> distance_per_minute)) <span class="sc">+</span></span>
+<span id="cb87-2"><a href="#cb87-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">binwidth =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb87-3"><a href="#cb87-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">&quot;Members&quot;</span>)</span></code></pre></div>
+<p><img src="Journal_files/figure-html/correlate%20distance%20and%20Member%20status%20Hist-1.png" width="672" /></p>
+<div class="sourceCode" id="cb88"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb88-1"><a href="#cb88-1" aria-hidden="true" tabindex="-1"></a>(member <span class="sc">/</span> casual) <span class="sc">*</span> <span class="dv">100</span></span></code></pre></div>
+<pre><code>## [1] 131.4174</code></pre>
+<ul>
+<li>Members ride 31.42% faster per minute on average.</li>
+<li>Are they sportier ?</li>
+</ul>
+<div id="are-members-sportier-than-casual-riders" class="section level5">
+<h5><strong>2.4.2.1 Are Members Sportier than Casual Riders</strong></h5>
+<ul>
+<li><p>Before we take a quick Conclusion we want to find out what influenced the location has on the traveled distance since we assumed a very simplistic model here. Using the DF from the Capitel <strong>Time</strong>.</p></li>
+<li><p>We compare the averages of the 212 stations we explored before for each member and casuals to avoid bias by location (ruling out differences in traffic and routes).</p></li>
+</ul>
+<div class="sourceCode" id="cb90"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb90-1"><a href="#cb90-1" aria-hidden="true" tabindex="-1"></a><span class="co">#creating empty vectors</span></span>
+<span id="cb90-2"><a href="#cb90-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb90-3"><a href="#cb90-3" aria-hidden="true" tabindex="-1"></a>mean_list_distance_casual <span class="ot">&lt;-</span> <span class="fu">c</span>()</span>
+<span id="cb90-4"><a href="#cb90-4" aria-hidden="true" tabindex="-1"></a>mean_list_distance_member <span class="ot">&lt;-</span> <span class="fu">c</span>()</span>
+<span id="cb90-5"><a href="#cb90-5" aria-hidden="true" tabindex="-1"></a>mean_list_distance <span class="ot">&lt;-</span> <span class="fu">c</span>()</span>
+<span id="cb90-6"><a href="#cb90-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb90-7"><a href="#cb90-7" aria-hidden="true" tabindex="-1"></a><span class="co"># loop to build the means under each circumstance for distance/minute</span></span>
+<span id="cb90-8"><a href="#cb90-8" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> most_casual_riders){</span>
+<span id="cb90-9"><a href="#cb90-9" aria-hidden="true" tabindex="-1"></a>mean_list_distance_casual <span class="ot">&lt;-</span> <span class="fu">append</span>(mean_list_distance_casual, <span class="fu">mean</span>(<span class="fu">subset</span>(time_distance_casual, start_station_id <span class="sc">==</span> i)<span class="sc">$</span>distance_per_minute))</span>
+<span id="cb90-10"><a href="#cb90-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb90-11"><a href="#cb90-11" aria-hidden="true" tabindex="-1"></a>mean_list_distance_member <span class="ot">&lt;-</span> <span class="fu">append</span>(mean_list_distance_member, <span class="fu">mean</span>(<span class="fu">subset</span>(time_distance_member, start_station_id <span class="sc">==</span> i)<span class="sc">$</span>distance_per_minute))</span>
+<span id="cb90-12"><a href="#cb90-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb90-13"><a href="#cb90-13" aria-hidden="true" tabindex="-1"></a>mean_list_distance <span class="ot">&lt;-</span> <span class="fu">append</span>(mean_list_distance, <span class="fu">mean</span>(<span class="fu">subset</span>(time_distance, start_station_id <span class="sc">==</span> i)<span class="sc">$</span>distance_per_minute))</span>
+<span id="cb90-14"><a href="#cb90-14" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb90-15"><a href="#cb90-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb90-16"><a href="#cb90-16" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(mean_list_distance_member <span class="sc">/</span> mean_list_distance_casual)<span class="sc">*</span><span class="dv">100</span></span></code></pre></div>
+<pre><code>## [1] 132.4597</code></pre>
+<div class="sourceCode" id="cb92"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb92-1"><a href="#cb92-1" aria-hidden="true" tabindex="-1"></a>mean_casual_station <span class="ot">&lt;-</span> <span class="fu">cbind</span>(mean_casual_station, <span class="at">mean_distance_minute =</span> <span class="fu">c</span>(mean_list_distance))</span>
+<span id="cb92-2"><a href="#cb92-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb92-3"><a href="#cb92-3" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(<span class="fu">lm</span>(perc_casual<span class="sc">~</span>mean_distance_minute <span class="sc">+</span> mean_riding_time, <span class="at">data=</span>mean_casual_station))</span></code></pre></div>
+<pre><code>## 
+## Call:
+## lm(formula = perc_casual ~ mean_distance_minute + mean_riding_time, 
+##     data = mean_casual_station)
+## 
+## Residuals:
+##      Min       1Q   Median       3Q      Max 
+## -23.4215  -3.3233   0.0786   3.6350  18.9525 
+## 
+## Coefficients:
+##                       Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept)          14.690509   3.428868   4.284  2.8e-05 ***
+## mean_distance_minute  0.007823   0.017314   0.452    0.652    
+## mean_riding_time      1.660919   0.100790  16.479  &lt; 2e-16 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 6.387 on 209 degrees of freedom
+## Multiple R-squared:  0.6643, Adjusted R-squared:  0.6611 
+## F-statistic: 206.8 on 2 and 209 DF,  p-value: &lt; 2.2e-16</code></pre>
+<div class="sourceCode" id="cb94"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb94-1"><a href="#cb94-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(<span class="fu">lm</span>(mean_distance_minute <span class="sc">~</span> mean_riding_time, <span class="at">data=</span>mean_casual_station))</span></code></pre></div>
+<pre><code>## 
+## Call:
+## lm(formula = mean_distance_minute ~ mean_riding_time, data = mean_casual_station)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -98.468 -16.827  -4.711  16.505  66.936 
+## 
+## Coefficients:
+##                  Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept)      179.3349     5.7984   30.93   &lt;2e-16 ***
+## mean_riding_time  -3.5159     0.3202  -10.98   &lt;2e-16 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 25.45 on 210 degrees of freedom
+## Multiple R-squared:  0.3648, Adjusted R-squared:  0.3618 
+## F-statistic: 120.6 on 1 and 210 DF,  p-value: &lt; 2.2e-16</code></pre>
+<p>The Mean for each station suggests that the members ride on Average <strong>32.45%</strong> faster than casual riders, which suggests that the starting station has no significant influence on the Speed. But the Linear model suggests that the distance_minute is not significant when we add it to the linear model from chapter 3 which is why the linear model does not explain more with adding the variable of <strong>mean_distance_time</strong> (R^2 = 66.11%). That is what the p value 0.652 &gt; 0.05 suggests.</p>
+</div>
+</div>
+<div id="correlation-distanceminute---casualsstation" class="section level4">
+<h4><strong>Correlation: distance/minute &lt;-&gt; %casuals/station</strong></h4>
+<div class="sourceCode" id="cb96"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb96-1"><a href="#cb96-1" aria-hidden="true" tabindex="-1"></a>trend_casual_distance <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(mean_casual_station, <span class="fu">aes</span>(<span class="at">x =</span> mean_riding_time, <span class="at">y =</span>mean_distance_minute )) <span class="sc">+</span></span>
+<span id="cb96-2"><a href="#cb96-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb96-3"><a href="#cb96-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(, <span class="at">se=</span><span class="cn">FALSE</span>) <span class="sc">+</span></span>
+<span id="cb96-4"><a href="#cb96-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">&quot;Regression mean_riding_time | mean_distance&quot;</span>)</span>
+<span id="cb96-5"><a href="#cb96-5" aria-hidden="true" tabindex="-1"></a>trend_casual_distance <span class="ot">&lt;-</span> trend_casual_distance <span class="sc">+</span> <span class="fu">expand_limits</span>(<span class="at">x =</span> <span class="dv">0</span>, <span class="at">y =</span> <span class="dv">0</span>)</span>
+<span id="cb96-6"><a href="#cb96-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb96-7"><a href="#cb96-7" aria-hidden="true" tabindex="-1"></a>trend_casual_distance <span class="ot">&lt;-</span> trend_casual_distance <span class="sc">+</span> <span class="fu">scale_x_continuous</span>(<span class="at">expand =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">0</span>)) <span class="sc">+</span> <span class="fu">scale_y_continuous</span>(<span class="at">expand =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">0</span>))</span>
+<span id="cb96-8"><a href="#cb96-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb96-9"><a href="#cb96-9" aria-hidden="true" tabindex="-1"></a>trend_casual_distance</span></code></pre></div>
+<p><img src="Journal_files/figure-html/Distance_m%20vs.%20casuals%20per%20station-1.png" width="672" /></p>
+<div class="sourceCode" id="cb97"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb97-1"><a href="#cb97-1" aria-hidden="true" tabindex="-1"></a>trend_casual_distance <span class="ot">&lt;-</span><span class="fu">ggplot</span>(mean_casual_station, <span class="fu">aes</span>(<span class="at">x =</span> perc_casual, <span class="at">y =</span> mean_distance_minute)) <span class="sc">+</span></span>
+<span id="cb97-2"><a href="#cb97-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb97-3"><a href="#cb97-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(, <span class="at">se=</span><span class="cn">FALSE</span>) <span class="sc">+</span></span>
+<span id="cb97-4"><a href="#cb97-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">&quot;Regression perc_casual | mean_distance&quot;</span>)</span>
+<span id="cb97-5"><a href="#cb97-5" aria-hidden="true" tabindex="-1"></a>trend_casual_distance <span class="ot">&lt;-</span> trend_casual_distance <span class="sc">+</span> <span class="fu">expand_limits</span>(<span class="at">x =</span> <span class="dv">0</span>, <span class="at">y =</span> <span class="dv">0</span>)</span>
+<span id="cb97-6"><a href="#cb97-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb97-7"><a href="#cb97-7" aria-hidden="true" tabindex="-1"></a>trend_casual_distance <span class="ot">&lt;-</span> trend_casual_distance <span class="sc">+</span> <span class="fu">scale_x_continuous</span>(<span class="at">expand =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">0</span>)) <span class="sc">+</span> <span class="fu">scale_y_continuous</span>(<span class="at">expand =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">0</span>))</span>
+<span id="cb97-8"><a href="#cb97-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb97-9"><a href="#cb97-9" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(trend_casual_distance)</span></code></pre></div>
+<pre><code>## $data
+##     nrows start_station_id perc_casual mean_riding_time mean_distance_minute
+## 1     212            15541    85.69331        35.294379             43.69193
+## 2     212            15544    82.52616        29.187876             51.70016
+## 3     212            13029    80.96820        28.872268             51.39773
+## 4     212            13022    80.23447        31.564505             87.24440
+## 5     212            13008    78.76983        32.551469             51.60355
+## 6     212            13300    77.47674        32.665211             51.43519
+## 7     212     TA1305000004    74.03517        27.284134             55.86450
+## 8     212     KA1503000064    73.35932        30.346475             64.67798
+## 9     212              623    68.75369        27.588363             52.06138
+## 10    212            13124    68.20375        31.321818             73.61666
+## 11    212            13042    66.95991        29.824870             79.29130
+## 12    212     TA1309000002    66.93172        27.289945             57.96017
+## 13    212            13431    65.27417        29.587650             91.92725
+## 14    212     KA1503000074    64.55037        36.245705             96.79347
+## 15    212     TA1305000010    64.49627        26.182313             63.68834
+## 16    212     TA1307000131    62.12943        23.962248             81.93056
+## 17    212           LF-005    61.77175        23.657096             96.74136
+## 18    212              LP-    60.93279        25.894896             79.59373
+## 19    212            13075    59.81506        24.247409             91.80122
+## 20    212     TA1308000012    59.36634        28.609379             95.23568
+## 21    212            13034    57.86778        23.734795             87.03535
+## 22    212     TA1308000001    57.56916        25.802280             98.22325
+## 23    212            13085    57.29866        20.398757            169.91410
+## 24    212     TA1306000029    57.26877        25.463146            118.83363
+## 25    212     TA1307000048    56.88011        34.213936             83.25938
+## 26    212     TA1306000013    55.58499        22.355812            117.56455
+## 27    212              632    55.29594        15.370916            115.24996
+## 28    212     TA1305000011    55.29379        22.116042             83.46740
+## 29    212           SL-005    54.73335        23.818850             67.58713
+## 30    212            13001    54.32823        23.382343             94.48742
+## 31    212            13036    53.93343        22.141608             88.53915
+## 32    212           SL-007    52.93385        22.265094             83.23713
+## 33    212     TA1307000126    52.83168        16.913188            109.04161
+## 34    212     TA1307000127    52.39142        14.816598            123.63094
+## 35    212            13128    51.63423        19.206578             97.16040
+## 36    212            13084    51.47232        15.791796            175.03384
+## 37    212     KA1503000059    51.46822        25.605854            106.75054
+## 38    212     TA1309000049    51.30664        23.006088             95.41119
+## 39    212            13179    50.79096        16.824928            117.46918
+## 40    212     TA1307000113    50.47336        12.612151            157.78074
+## 41    212     TA1305000034    50.35167        15.220192            163.90492
+## 42    212     TA1309000039    49.95141        21.887050             90.19400
+## 43    212     TA1308000009    49.71410        26.758810            151.09129
+## 44    212            13146    49.07003        17.066258            113.18690
+## 45    212            13430    48.89706        16.448221            108.10194
+## 46    212     TA1308000019    48.74675        13.906995            136.06099
+## 47    212     TA1305000041    48.70474        16.381606            139.18629
+## 48    212            13229    48.43600        13.419866            142.97331
+## 49    212            13427    48.34591        20.008394            100.39202
+## 50    212     TA1308000049    48.31925        13.820654             93.43526
+## 51    212     TA1309000023    48.20462        13.031026            126.70684
+## 52    212     TA1307000117    48.04920        19.499789            105.38862
+## 53    212     KA1503000015    47.98391        21.319555             97.60113
+## 54    212     TA1305000003    47.94024        19.821884            134.16060
+## 55    212              639    47.65668        28.721356             83.06387
+## 56    212            13053    47.53708        16.128156            135.01975
+## 57    212     TA1309000019    47.36668        18.525486            104.90417
+## 58    212     TA1305000029    47.31608        17.845878             99.68704
+## 59    212            13193    47.24549        14.299308            126.70146
+## 60    212            15534    47.05341        22.914216            103.87096
+## 61    212            13276    47.03985        19.518950             98.79481
+## 62    212     KA1504000171    47.02084        24.910925             86.16413
+## 63    212     TA1307000041    46.32421        21.866509             97.56288
+## 64    212     TA1309000025    46.27691        15.176520             97.78712
+## 65    212            13133    46.20238        16.644157            155.28709
+## 66    212            13050    46.17066        18.933287            114.95742
+## 67    212            13068    45.81583        16.458741            172.01185
+## 68    212     TA1307000038    45.42511        13.818599            125.06053
+## 69    212     KA1504000152    45.42469        29.458980             74.44993
+## 70    212     TA1309000010    45.37781        20.101738             76.11307
+## 71    212            13221    45.32164        16.363109            165.07945
+## 72    212     KA1504000103    45.17005        15.351406            174.73929
+## 73    212     KA1504000134    45.14048        17.754857            106.94757
+## 74    212            13296    45.11023        14.041404            176.13196
+## 75    212     TA1305000037    45.04904        15.839672            156.44358
+## 76    212            13071    44.99792        14.408627            128.20678
+## 77    212     TA1308000050    44.99309        14.159266            109.44663
+## 78    212     TA1307000134    44.95244        14.510547            129.89786
+## 79    212     TA1309000058    44.94299        13.773047            129.55472
+## 80    212     KA1504000133    44.76475        17.630811             99.24520
+## 81    212     TA1308000029    44.55899        19.473886            116.49665
+## 82    212     TA1306000015    44.25934        15.460092            149.71581
+## 83    212            13263    44.03002        20.601293            131.42826
+## 84    212            13136    43.93480        14.672551            164.07108
+## 85    212            13224    43.84926        15.715616            153.81704
+## 86    212            13058    43.84212        13.581595            142.80063
+## 87    212     TA1305000025    43.83665        16.191979            106.04204
+## 88    212            13294    43.82361        13.667313            153.65701
+## 89    212     TA1309000033    43.81957        13.262458            120.08832
+## 90    212     KA1504000146    43.74740        16.925684            108.84087
+## 91    212              624    43.74468        17.824413             88.78727
+## 92    212            13059    43.71681        13.750631            136.22642
+## 93    212            13303    43.65845        13.981863            122.34043
+## 94    212     KA1504000135    43.48908        12.498532             93.93916
+## 95    212     TA1307000142    43.27230        14.884520            108.83451
+## 96    212            15529    43.23768        20.862432            105.11788
+## 97    212     TA1305000020    43.17219        13.693093            198.12719
+## 98    212     KA1503000044    43.16672        18.299759            123.37946
+## 99    212            15530    43.08745        17.917094            110.03167
+## 100   212     KP1705001026    42.90787        14.850415            107.51182
+## 101   212     TA1305000014    42.89055        14.656255            132.46824
+## 102   212            13192    42.72616        14.460179            111.69368
+## 103   212     TA1307000052    42.70058        14.030209            129.41623
+## 104   212            13061    42.69236        14.591012            182.19903
+## 105   212            13277    42.63684        16.506248            115.63985
+## 106   212     TA1309000061    42.43346        12.978583            117.61845
+## 107   212            13191    42.25596        15.058255            120.91779
+## 108   212     TA1306000014    42.24488        12.531367            136.68329
+## 109   212           SL-011    42.12008        14.746980            108.29224
+## 110   212     TA1307000061    42.11186        16.494291            107.66034
+## 111   212           SL-008    42.10444        16.864044             84.19054
+## 112   212     TA1305000035    41.95522        18.049636             95.31146
+## 113   212            15535    41.94087        13.684867            141.45328
+## 114   212           WL-008    41.88013        15.315729            137.85368
+## 115   212     TA1309000030    41.87769        15.091231            153.85436
+## 116   212     TA1307000001    41.70040        13.512964            174.62839
+## 117   212     TA1305000039    41.68069        14.224398            181.76916
+## 118   212     TA1308000022    41.63608        17.402413             94.48051
+## 119   212     TA1307000136    41.44625        14.292755            113.46269
+## 120   212            13323    41.37334        14.840003             94.73537
+## 121   212     TA1307000006    41.36519        13.327540            154.39815
+## 122   212            13137    41.32755        16.131297            107.24663
+## 123   212     KA1503000012    41.23724        15.176650            107.64908
+## 124   212     TA1307000070    41.23223        14.299192            143.16655
+## 125   212     TA1305000002    41.21718        18.490042             84.76951
+## 126   212            18067    41.12491        18.995859            178.22084
+## 127   212            13132    40.89519        13.570495            153.73331
+## 128   212            13033    40.87076        13.045056            163.16814
+## 129   212            13278    40.82094        16.383017             97.72084
+## 130   212            13196    40.73702        12.478522            175.67934
+## 131   212            13289    40.71414        14.484170            189.11676
+## 132   212            13243    40.71075        15.998005            170.50976
+## 133   212     TA1309000024    40.70004        15.269894             96.54895
+## 134   212     TA1307000128    40.55088        15.052315            101.72425
+## 135   212     TA1307000150    40.44208        18.849209             99.84129
+## 136   212            13235    40.21291        13.666273            120.51544
+## 137   212     TA1309000008    40.12167        15.982956            115.32263
+## 138   212     KA1504000079    40.06270        11.861574            128.87622
+## 139   212     TA1306000008    40.01995        12.911458            113.70480
+## 140   212            13102    39.96615        21.948469             86.37799
+## 141   212     TA1307000120    39.71680        14.273541            151.49086
+## 142   212              620    39.34583        11.443273            125.50787
+## 143   212     TA1306000011    39.18528        11.710659             83.36511
+## 144   212     TA1307000039    39.13903        14.031842            104.95926
+## 145   212            13389    39.13460        17.656532             79.54165
+## 146   212     TA1309000006    39.08920        14.061855            130.33157
+## 147   212     TA1309000037    38.97822        14.594700            106.55326
+## 148   212              RN-    38.95897        12.190755            123.04498
+## 149   212            13045    38.89017        14.985910            108.50968
+## 150   212            15545    38.76311        28.304007             61.79480
+## 151   212            13063    38.72394        13.554317            109.59598
+## 152   212     TA1309000035    38.62482        14.821274            117.01973
+## 153   212     TA1307000124    38.61736        18.292972             70.62066
+## 154   212     TA1307000107    38.59220        14.623906            105.28336
+## 155   212     TA1306000012    38.52371        11.775802            103.41653
+## 156   212            18062    38.48852        14.656797            157.09005
+## 157   212     TA1309000014    38.45545        14.593567            127.16723
+## 158   212     TA1307000138    38.38454        14.035343            154.54706
+## 159   212            13074    38.15846        15.191522            131.89897
+## 160   212            13247    38.13978        13.528907            173.08204
+## 161   212     TA1305000005    38.13943        16.441241             92.49995
+## 162   212     KA1503000041    37.99641        19.394579            135.56565
+## 163   212            13409    37.74510        13.510391            164.83841
+## 164   212            13108    37.73236        17.025420            105.69603
+## 165   212              331    37.72125        13.246445            125.25507
+## 166   212     TA1307000151    37.57192        13.376486            120.40879
+## 167   212            13325    37.53982        14.720312             94.29027
+## 168   212     TA1307000064    37.46776        12.029689            142.47810
+## 169   212     TA1309000036    37.38937        14.677845            116.45938
+## 170   212     TA1309000059    37.33349        12.036573            153.56568
+## 171   212     TA1309000042    37.05254        13.317121            164.11415
+## 172   212            13338    36.78565        19.919081            126.81169
+## 173   212            13150    36.74293        18.671268             79.62615
+## 174   212     TA1307000166    36.13633        13.494786            126.53552
+## 175   212            13016    36.09236        19.245884            126.44239
+## 176   212            13290    36.01455        14.018016            180.22930
+## 177   212     TA1309000027    35.97300        14.321806            102.68491
+## 178   212     TA1307000111    35.72235        13.862554            118.00719
+## 179   212     TA1305000006    35.61736        15.623336             97.41477
+## 180   212     TA1307000163    35.60196        13.439961            155.39566
+## 181   212     TA1306000016    35.46980        11.120860            156.40741
+## 182   212            13379    35.29366        15.582511             90.73037
+## 183   212     TA1305000030    35.11229        15.056402            121.91711
+## 184   212            13156    34.95979        15.101201            169.55797
+## 185   212     TA1306000032    34.60444        12.731302            143.57814
+## 186   212            13154    34.24737        13.100241            135.38857
+## 187   212     TA1306000010    34.23443        15.352674            103.54318
+## 188   212     TA1306000003    34.14664        11.150815            166.33426
+## 189   212     TA1305000022    33.52941        12.196637            119.30455
+## 190   212            13017    32.84991        11.498856            127.32068
+## 191   212     TA1309000066    32.58335        13.339867            152.53240
+## 192   212     TA1309000007    32.45478        14.075517            113.04499
+## 193   212            13158    32.10449        13.800155            149.32071
+## 194   212            13006    32.09581        14.208838            107.40162
+## 195   212              636    31.89460        11.565230            121.01768
+## 196   212            13194    31.76966        13.844952            184.33553
+## 197   212     TA1306000026    31.60632        12.616458            138.98215
+## 198   212            13341    31.54367        13.807215            137.52998
+## 199   212            13021    30.60642        12.057217            140.56540
+## 200   212            13265    30.46204        10.790159            142.38157
+## 201   212     TA1307000062    30.05178        12.164601            132.03408
+## 202   212            13157    29.99743        12.710524            144.30518
+## 203   212     TA1305000032    29.74496        13.118297            130.04905
+## 204   212            13011    29.59345        14.558511            124.87380
+## 205   212     KA1503000043    28.21228        10.674540            138.09758
+## 206   212            15539    27.79415        12.957345            144.49708
+## 207   212     TA1309000004    26.79422        13.824259            102.42360
+## 208   212     TA1306000009    26.24306        10.612702            134.44216
+## 209   212              638    24.38841        12.952397            132.64194
+## 210   212           WL-012    24.14066        12.248988            144.59428
+## 211   212     KA1503000071    23.42867        10.649964             96.74279
+## 212   212     KA1503000014    23.08817         9.393993             47.83862
+## 
+## $layers
+## $layers[[1]]
+## geom_point: na.rm = FALSE
+## stat_identity: na.rm = FALSE
+## position_identity 
+## 
+## $layers[[2]]
+## geom_smooth: na.rm = FALSE, orientation = NA, se = FALSE
+## stat_smooth: na.rm = FALSE, orientation = NA, se = FALSE
+## position_identity 
+## 
+## $layers[[3]]
+## mapping: x = ~x, y = ~y 
+## geom_blank: na.rm = FALSE
+## stat_identity: na.rm = FALSE
+## position_identity 
+## 
+## 
+## $scales
+## &lt;ggproto object: Class ScalesList, gg&gt;
+##     add: function
+##     clone: function
+##     find: function
+##     get_scales: function
+##     has_scale: function
+##     input: function
+##     n: function
+##     non_position_scales: function
+##     scales: list
+##     super:  &lt;ggproto object: Class ScalesList, gg&gt;
+## 
+## $mapping
+## Aesthetic mapping: 
+## * `x` -&gt; `perc_casual`
+## * `y` -&gt; `mean_distance_minute`
+## 
+## $theme
+## list()
+## 
+## $coordinates
+## &lt;ggproto object: Class CoordCartesian, Coord, gg&gt;
+##     aspect: function
+##     backtransform_range: function
+##     clip: on
+##     default: TRUE
+##     distance: function
+##     expand: TRUE
+##     is_free: function
+##     is_linear: function
+##     labels: function
+##     limits: list
+##     modify_scales: function
+##     range: function
+##     render_axis_h: function
+##     render_axis_v: function
+##     render_bg: function
+##     render_fg: function
+##     setup_data: function
+##     setup_layout: function
+##     setup_panel_guides: function
+##     setup_panel_params: function
+##     setup_params: function
+##     train_panel_guides: function
+##     transform: function
+##     super:  &lt;ggproto object: Class CoordCartesian, Coord, gg&gt;</code></pre>
+<ul>
+<li><p>As a linear Model does not represent our Data fully we need to take a look at the Trend in the Graphs above. The Scattering of the mean_distance in comparison to the mean_riding_time seems very similar. The Trend line also suggests a somewhat linear relationship between the two but at the edges the linearity is switching over to a logarithmic relationship.</p></li>
+<li><p>In the end it is not Clear if the members are sportier the Data can not support the Claim since the distance/time does not have a significant influence on the membership.</p></li>
+</ul>
+</div>
+<div id="further-exploration-with-tableau" class="section level4">
+<h4>Further exploration with Tableau:</h4>
+<p>See Full Dashboard here: link zu tableau dashboard</p>
+<div id="expand-on-chapter-1.2" class="section level5">
+<h5>Expand on Chapter 1.2</h5>
+<ul>
+<li><p>From Chapter 1.2 we found out what Stations are most important to look at but we can not see if there are geographical differences just by looking at the raw Data.</p></li>
+<li><p>Data: counts of members and casuals in all locations</p></li>
+</ul>
+<div class="sourceCode" id="cb99"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb99-1"><a href="#cb99-1" aria-hidden="true" tabindex="-1"></a>total_station_location <span class="ot">&lt;-</span> <span class="fu">count</span>(<span class="fu">group_by</span>(data_all,start_station_id), <span class="at">member_casual=</span>member_casual)</span>
+<span id="cb99-2"><a href="#cb99-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb99-3"><a href="#cb99-3" aria-hidden="true" tabindex="-1"></a>location_lat_lng <span class="ot">&lt;-</span> <span class="fu">aggregate</span>(start_lat <span class="sc">~</span> start_station_id, <span class="at">data=</span>data_all, <span class="at">FUN=</span>mean)</span>
+<span id="cb99-4"><a href="#cb99-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb99-5"><a href="#cb99-5" aria-hidden="true" tabindex="-1"></a>location_lat_lng<span class="sc">$</span>start_lng <span class="ot">&lt;-</span> <span class="fu">aggregate</span>(start_lng <span class="sc">~</span> start_station_id, <span class="at">data=</span>data_all, <span class="at">FUN=</span>mean)<span class="sc">$</span>start_lng</span>
+<span id="cb99-6"><a href="#cb99-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb99-7"><a href="#cb99-7" aria-hidden="true" tabindex="-1"></a>location<span class="ot">&lt;-</span> <span class="fu">merge</span>(total_station_location, location_lat_lng, <span class="at">by.x =</span> <span class="dv">1</span>, <span class="at">by.y =</span> <span class="dv">1</span>, <span class="at">all.x =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb99-8"><a href="#cb99-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb99-9"><a href="#cb99-9" aria-hidden="true" tabindex="-1"></a>location_casual <span class="ot">&lt;-</span> total_station_location <span class="sc">%&gt;%</span></span>
+<span id="cb99-10"><a href="#cb99-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">subset</span>(. , member_casual <span class="sc">==</span> <span class="st">&quot;casual&quot;</span>)</span>
+<span id="cb99-11"><a href="#cb99-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb99-12"><a href="#cb99-12" aria-hidden="true" tabindex="-1"></a>location_member <span class="ot">&lt;-</span> total_station_location <span class="sc">%&gt;%</span></span>
+<span id="cb99-13"><a href="#cb99-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">subset</span>(. , member_casual <span class="sc">==</span> <span class="st">&quot;member&quot;</span>)</span>
+<span id="cb99-14"><a href="#cb99-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb99-15"><a href="#cb99-15" aria-hidden="true" tabindex="-1"></a>difference_riders <span class="ot">&lt;-</span><span class="fu">merge</span>(location_casual, location_member, <span class="at">by.x =</span> <span class="dv">1</span>, <span class="at">by.y =</span> <span class="dv">1</span>, <span class="at">all.x =</span> <span class="cn">TRUE</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb99-16"><a href="#cb99-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">difference_casual_member =</span> n.x <span class="sc">-</span> n.y)</span>
+<span id="cb99-17"><a href="#cb99-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb99-18"><a href="#cb99-18" aria-hidden="true" tabindex="-1"></a>location <span class="ot">&lt;-</span> <span class="fu">merge</span>(location, <span class="fu">select</span>(difference_riders, start_station_id, difference_casual_member), <span class="at">by.x =</span> <span class="dv">1</span>, <span class="at">by.y =</span> <span class="dv">1</span>, <span class="at">all.x =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
+<ul>
+<li>We plot the whole dataset in Tableau and get the Following distribution as a results:</li>
+</ul>
+</div>
+</div>
+<div id="compare-seasonal-time-shifts" class="section level4">
+<h4>2.4 Compare Seasonal Time shifts</h4>
+<ul>
+<li>Time of the Year -&gt; relationship to members and casuals</li>
+</ul>
+</div>
+</div>
+</div>
+<div id="conclusion" class="section level2">
+<h2>Conclusion</h2>
+</div>
+
+
+
+</div>
+</div>
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open');
+  });
+});
+</script>
+
+<!-- code folding -->
+
+<script>
+$(document).ready(function ()  {
+
+    // temporarily add toc-ignore selector to headers for the consistency with Pandoc
+    $('.unlisted.unnumbered').addClass('toc-ignore')
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3,h4",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_');
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

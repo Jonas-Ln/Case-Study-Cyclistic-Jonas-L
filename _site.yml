@@ -1,0 +1,13 @@
+name: "Case Study - Cyclistic"
+navbar:
+  title: "Case Study - Cyclistic"
+  left:
+    - text: "Home"
+      href: index.html
+    - text: "Findings Report"
+      href: 
+    - text: "Detailed Report"
+      href: Journal.html
+    - text: "Links"
+      href: Links.html
+output_dir: "docs"
