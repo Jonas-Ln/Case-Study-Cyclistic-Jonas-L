@@ -41,25 +41,9 @@
 + [Mar 2nd 2022](https://divvy-tripdata.s3.amazonaws.com/202202-divvy-tripdata.zip)
 + [Apr 6th 2022](https://divvy-tripdata.s3.amazonaws.com/202203-divvy-tripdata.zip)
 
-<style type="text/css">
-.title {
-  display: none;
-}
-
-#getting-started img {
-  margin-right: 10px;
-}
-
-</style>
 
 <div class="row" style="padding-top: 30px;">
 <div class="col-sm-6">
-
-# **Case Study:**
-# **How Does a Bike-Share** 
-# **Navigate Speedy Success**
-
-<br>
 
 ### **Company: "Cyclistic"**
 
