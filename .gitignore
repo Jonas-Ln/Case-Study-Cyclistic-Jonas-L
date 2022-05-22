@@ -7,9 +7,6 @@
 
 *.rdb
 
-# Portable Network Graphics
-*.png
-
 # Ignore Csv
 
 *.csv
