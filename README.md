@@ -1,7 +1,7 @@
 # Case Study: Cyclistic - Jonas Lenz
  My full Project for the Google Data Analytics certificate
 
-# [Full Project in Github Pages](https://jonas-ln.github.io/Case-Study-Cyclistic-Jonas-L/index.html)
+# [Full Project in Github Pages](https://jonas-ln.github.io/Case-Study-Cyclistic-Jonas-L/)
 
 ### Packages used:
 
