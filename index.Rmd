@@ -25,7 +25,7 @@ output:
 ## **Company: Cyclistic**
 
 
-#### About the Company:
+#### **About the Company:**
 
 + 5,824 bicycles and 692 docking stations
 + The majority of riders opt for traditional bikes
@@ -34,13 +34,13 @@ output:
 + 30% use them to commute to work each day.
 
 
-#### Main Questions:
+#### **Main Questions:**
 
 1. How do annual members and casual riders use Cyclistic bikes differently?
 
 2. What are the implications for maximizing annual members derived from the difference between annual members and casual riders? 
 
-#### Business Task:
+#### **Business Task:**
 
 + What measures do persuade **casual riders** into signing up for a annual membership.
 
@@ -52,7 +52,7 @@ output:
 
 -> Clear descriptive data provided by GPS, Membership information and type of bike. Does not exclude specific data. (collects all data as a whole) Therefore no bias recognized.
 
-#### Data:
+#### **Data:**
 
 Columns: 13
 Rows: 5,723,532
