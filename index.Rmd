@@ -1,5 +1,5 @@
 ---
-title: "Case Study - Cyclistic"
+title: "**Case Study - Cyclistic**"
 output: 
   html_document:
     theme: cosmo
@@ -19,11 +19,13 @@ output:
 <div class="row" style="padding-top: 30px;">
 <div class="col-sm-6">
 
-# **Case Study: How Does a Bike-Share Navigate Speedy Success**
+# **Case Study:**
+# **How Does a Bike-Share** 
+# **Navigate Speedy Success**
 
+<br>
 
-## **Company: Cyclistic**
-
+### **Company: "Cyclistic"**
 
 #### **About the Company:**
 
@@ -33,39 +35,37 @@ output:
 + Cyclistic users are more likely to ride for leisure
 + 30% use them to commute to work each day.
 
+#### **Main Question:**
 
-#### **Main Questions:**
-
-1. How do annual members and casual riders use Cyclistic bikes differently?
-
-2. What are the implications for maximizing annual members derived from the difference between annual members and casual riders? 
++ How do annual members and casual riders use Cyclistic bikes differently?
 
 #### **Business Task:**
 
-+ What measures do persuade **casual riders** into signing up for a annual membership.
-
-
-+ **Reliable:** Data read from Bike Computer
-+ **Original:** First Source Data provided by Cyclistic
-+ **Comprehensive:** Clear Data Structure 
-+ **Current:** Recent Data from last year
-
--> Clear descriptive data provided by GPS, Membership information and type of bike. Does not exclude specific data. (collects all data as a whole) Therefore no bias recognized.
++ What drives **casual riders** into signing up for a membership.
 
 #### **Data:**
 
-Columns: 13
-Rows: 5,723,532
++ **Columns:** 13
++ **Rows:** 5,723,532
++ **Reliable:** Data from Bike Computer
++ **Original:** First source data provided by Cyclistic
++ **Comprehensive:** Clear data structure
++ **Current:** Recent data from last year until now
+
+-> Clear descriptive data provided by GPS, Membership information and type of bike. Does only exclude personal information.
+
+
 
 
 </div>
 <div class="col-sm-6">
 
-### Tools Used:
+### **Tools Used:**
 
 + RStudio
 + Tableau
 + GithubPages
++ Git
 
 </a>
 </div>

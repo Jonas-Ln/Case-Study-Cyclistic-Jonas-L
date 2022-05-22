@@ -1,5 +1,5 @@
 ---
-title: "Resources:"
+title: "**Resources:**"
 output: 
     html_document:
       theme: cosmo
@@ -10,8 +10,11 @@ output:
 
 ### [License](https://ride.divvybikes.com/data-license-agreement)
 
+### [Tableau Dashboard](https://public.tableau.com/app/profile/jonas112520/viz/CaseStudyCyclisticDashboard/DasboardCyclisticCaseStudy)
 
-### Datasets used for this Case Study:
+### [Webpage Template](https://crumplab.github.io)
+
+### **Datasets:**
 
 + [May 7th 2021](https://divvy-tripdata.s3.amazonaws.com/202104-divvy-tripdata.zip)
 + [Jun 11th 2021](https://divvy-tripdata.s3.amazonaws.com/202105-divvy-tripdata.zip)
@@ -28,6 +31,4 @@ output:
 
 
 
-
-### [Webpage Template](https://crumplab.github.io)
 
