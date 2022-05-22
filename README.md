@@ -1,6 +1,8 @@
 # Case Study: Cyclistic - Jonas Lenz
  My full Project for the Google Data Analytics certificate
 
+# [Full Project in Github Pages](https://jonas-ln.github.io/Case-Study-Cyclistic-Jonas-L/Links.html)
+
 ### Packages used:
 
 + library(dplyr)
