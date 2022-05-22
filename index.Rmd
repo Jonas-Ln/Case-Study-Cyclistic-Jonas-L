@@ -60,6 +60,10 @@ output:
 </div>
 <div class="col-sm-6">
 
+# **Author: Jonas Lenz**
+
+<br>
+
 ### **Tools Used:**
 
 + RStudio
