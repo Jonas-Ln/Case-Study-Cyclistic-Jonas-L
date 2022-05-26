@@ -24,7 +24,7 @@ library(ggplot2)
 library(tidyverse)
 library(geosphere)
 
-data_all <- list.files(path = "/Users/jonaslenz/Case Study Cyclistic/Data Sets Used", pattern = "May2021_to_April2022_Cyclist_Data.csv", full.names = TRUE) %>% 
+data_all <- list.files(path = getwd(), pattern = ".csv", full.names = TRUE) %>%
   lapply(read_csv) %>%                        
   bind_rows
 data_all_before_mapulation <- data_all
